@@ -1,10 +1,12 @@
-export { spawn } from 'child_process';
-console.log("hello!")
+import { spawn } from 'child_process';
+
 const command1 = (program) => {
   const args = program.args;
 
   // Join the arguments into a single string
-  const commandString = args.join(' ');
+  const commandString = args.slice(1).join(' ');
+
+  console.log(commandString);
 
   // Execute the command using the shell
   const childProcess = spawn(commandString, {
