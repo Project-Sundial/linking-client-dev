@@ -3,33 +3,37 @@ import generateRunToken from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/serverPing.js';
 
 const exec = async (program) => {
-  const endpointKey = program.args[1];
-
+  // Store start ping info
   const startTime = Date.now();
   const runToken = generateRunToken();
   let status = "started";
 
   const startPing = { startTime, runToken, status };
 
-  const args = program.args.slice(2);
-  const commandString = args.join(' ');
+  // Store run info
+  const commandString = program.args.slice(2).join(' ');
+  const endpointKey = program.args[1];
 
+  // Ping monitor
   await pingMonitor(startPing, endpointKey);
 
-  // Execute the command using the shell
+  // Execute the command using the shell, inherit the standard I/O streams
   const childProcess = spawn(commandString, {
     shell: true,
-    stdio: 'inherit', // To inherit the standard I/O streams
+    stdio: 'inherit',
   });
 
+  // Check for errors when spinning up child process
   childProcess.on('error', (error) => {
     console.error('Error:', error);
   });
 
+  // Store additional end ping info
   const endTime = Date.now();
   const endPing = { startTime, endTime, runToken };
 
-  childProcess.on('exit', async (code) => {
+  // 
+  await childProcess.on('exit', async (code) => {
     if (code === 0) {
       console.log('Command completed successfully');
       endPing.status = "completed";
