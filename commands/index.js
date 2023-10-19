@@ -1,13 +1,18 @@
 import { spawn } from 'child_process';
+import generateRunToken from '../utils/generateRunToken.js'
 
-const command1 = (program) => {
-  const args = program.args;
+const exec = (program) => {
+  const endpointId = program.args[1];
+  const startTime = Date.now();
+  const runToken = generateRunToken();
+  let status = "started";
 
-  // Join the arguments into a single string
-  const commandString = args.slice(1).join(' ');
+  const startPing = { startTime, runToken, status };
 
-  console.log(commandString);
+  const args = program.args.slice(2);
+  const commandString = args.join(' ');
 
+  
   // Execute the command using the shell
   const childProcess = spawn(commandString, {
     shell: true,
@@ -33,6 +38,6 @@ const command2 = () => {
 };
 
 export default {
-  command1,
+  exec,
   command2,
 };
