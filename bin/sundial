@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
+const x = () => {
+  console.log('hiya');
+}
 const { program } = require('commander');
 console.log('hi');
+
 
 // import { program } from 'commander';
 // import sundial from '../lib/sundial.js';
@@ -20,4 +24,6 @@ console.log('hi');
 //   .description('Description of command2')
 //   .action(sundial.command2);
 
-// program.parse(process.argv);
+program.parse(process.argv);
+
+console.log(program.args);

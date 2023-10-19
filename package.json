@@ -7,20 +7,29 @@
     "lib": "lib",
     "test": "test"
   },
+  "bin": {
+    "sundial": "./dist/sundial"
+  },
   "scripts": {
-    "start": "nodemon bin/sundial",
+    "compile": "babel bin/sundial -o dist/sundial",
+    "start": "node dist/sundial",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": " <David Perez>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
     "@babel/core": "^7.23.2",
     "@babel/node": "^7.22.19",
+    "@babel/plugin-transform-runtime": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
-    "commander": "^11.1.0"
+    "@babel/runtime": "^7.23.2",
+    "commander": "^11.1.0",
+    "core-js": "^3.33.0",
+    "regenerator-runtime": "^0.14.0"
   }
 }
