@@ -32,7 +32,7 @@ const exec = async (program) => {
   const endTime = Date.now();
   const endPing = { startTime, endTime, runToken };
 
-  // 
+  // End ping upon exit from process
   await childProcess.on('exit', async (code) => {
     if (code === 0) {
       console.log('Command completed successfully');
