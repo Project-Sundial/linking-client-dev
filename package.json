@@ -1,0 +1,26 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "Command line interface for loading cron jobs and pinging the server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "nodemon bin/sundial",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": " <David Perez>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.2",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
+}
