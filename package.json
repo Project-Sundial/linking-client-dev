@@ -1,20 +1,30 @@
 {
-  "name": "cli2",
+  "name": "cli",
   "version": "1.0.0",
   "description": "",
-  "exports": "./index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "convert": "babel src -d lib",
+    "build": "npm run convert && pkg ./lib/index.js",
+    "test": "jest --verbose --runInBand"
   },
   "bin": {
-    "sundial": "index.js"
+    "sundial-dev": "./src/index.js"
   },
   "keywords": [],
   "author": " <David Perez>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.5.1",
-    "commander": "^11.1.0"
+    "axios": "^0.27.2",
+    "commander": "^11.1.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.2",
+    "pkg": "^5.8.1"
   }
 }
