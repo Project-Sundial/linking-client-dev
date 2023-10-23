@@ -7,10 +7,10 @@ program
   .version('1.0.0')
   .description('My Command Line Tool');
 
-program.command('exec')
+program.command('run')
   .description('Pings monitor and runs cron job')
   .action(() => {
-    sundial.exec(program); // Pass the program object to sundial.command1
+    sundial.run(program); // Pass the program object to sundial.command1
   });
 
 program.command('command2')

@@ -1,8 +1,9 @@
-import { spawn } from 'child_process';
+import { spawn, exec } from 'child_process';
 import generateRunToken from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/serverPing.js';
+import readline from 'readline';
 
-const exec = async (program) => {
+const run = async (program) => {
   console.log("Start of a run!");
 
   // Store start ping info
@@ -51,11 +52,65 @@ const exec = async (program) => {
   });
 };
 
-const command2 = () => {
-  // Logic for command2
+// Create a function to edit the crontab interactively
+const editCrontab = (crontabText) => {
+  const lines = crontabText.split('\n');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const modifiedLines = [];
+
+  const processLine = (index) => {
+    if (index >= lines.length) {
+      rl.close();
+      saveCrontab(modifiedLines.join('\n'));
+      return;
+    }
+
+    let line = lines[index];
+    rl.question(`Edit line ${index + 1}:\n${line}\n[y/n/q (quit)]: `, (answer) => {
+      if (answer.toLowerCase() === 'y' && validLine(line)) {
+        line 
+      } else if (answer.toLowerCase() === 'q') {
+        rl.close();
+        saveCrontab(modifiedLines.join('\n'));
+        return;
+      }
+      modifiedLines.push(line);
+
+      processLine(index + 1);
+    });
+  };
+
+  processLine(0);
+};
+
+// Create a function to save the modified crontab
+const saveCrontab = (crontabText) => {
+  exec('crontab -', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error saving crontab: ${error}`);
+      return;
+    }
+    console.log('Crontab updated.');
+  }).stdin.write(crontabText);
+};
+
+
+const discover = () => {
+  exec('crontab -l', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error listing crontab: ${error}`);
+      return;
+    }
+    console.log(stdout);
+    editCrontab(stdout);
+  });
 };
 
 export default {
-  exec,
-  command2,
+  run,
+  discover,
 };

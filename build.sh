@@ -24,7 +24,7 @@ chmod +x /usr/local/bin/sundial
 
 # Modify crontab with example cronjob + output
 crontab -l > $UPDATED_CRONTAB
-echo "* * * * * /usr/local/bin/sundial exec abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
+echo "* * * * * /usr/local/bin/sundial run abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
 
 crontab $UPDATED_CRONTAB
 
