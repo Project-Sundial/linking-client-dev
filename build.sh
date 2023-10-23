@@ -6,7 +6,7 @@ ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
 NODE="node18"
 PLATFORM="macos"
 ARCH="arm64"
-NEW_CRONTAB="/tmp/new_crontab"
+UPDATED_CRONTAB="/tmp/updated_crontab"
 
 # BUILD SCRIPT
 
@@ -23,10 +23,10 @@ sudo mv ./index /usr/local/bin/sundial
 chmod +x /usr/local/bin/sundial
 
 # Modify crontab with example cronjob + output
-echo "PATH=/usr/local/bin:/usr/bin:/bin" > $NEW_CRONTAB
-echo "* * * * * /usr/local/bin/sundial exec abcde echo hello >> $ROOT_PATH/cron.log" >> $NEW_CRONTAB
+crontab -l > $UPDATED_CRONTAB
+echo "* * * * * /usr/local/bin/sundial exec abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
 
-crontab $NEW_CRONTAB
+crontab $UPDATED_CRONTAB
 
 # Cleanup
-rm -r $NEW_CRONTAB $ROOT_PATH/lib
+rm -r $UPDATED_CRONTAB $ROOT_PATH/lib

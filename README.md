@@ -13,4 +13,4 @@ The bash script build.sh allows you to:
 5. add an example cronjob that logs its output to a new cron.log file
 
 Whenever we want to recompile our program executable, we can with one command from the root folder: 
-`sudo bash build.sh`
+`bash build.sh`
