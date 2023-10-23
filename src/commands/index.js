@@ -3,6 +3,8 @@ import generateRunToken from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/serverPing.js';
 
 const exec = async (program) => {
+  console.log("Start of a run!");
+
   // Store start ping info
   const startTime = Date.now();
   const runToken = generateRunToken();
@@ -28,12 +30,13 @@ const exec = async (program) => {
     console.error('Error:', error);
   });
 
-  // Store additional end ping info
-  const endTime = Date.now();
-  const endPing = { startTime, endTime, runToken };
-
   // End ping upon exit from process
   await childProcess.on('exit', async (code) => {
+
+    // Store additional end ping info
+    const endTime = Date.now();
+    const endPing = { startTime, endTime, runToken };
+
     if (code === 0) {
       console.log('Command completed successfully');
       endPing.status = "completed";
@@ -43,6 +46,8 @@ const exec = async (program) => {
     }
 
     await pingMonitor(endPing, endpointKey);
+
+    console.log("End of a run!\n\n");
   });
 };
 

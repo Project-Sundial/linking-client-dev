@@ -10,7 +10,6 @@ program
 program.command('exec')
   .description('Pings monitor and runs cron job')
   .action(() => {
-    console.log(sundial.command1);
     sundial.exec(program); // Pass the program object to sundial.command1
   });
 
