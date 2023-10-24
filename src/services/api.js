@@ -1,5 +1,5 @@
 import axios from "axios";
-import { nanoid } from 'nanoid';
+import { generateMockEndpoint } from '../utils/generateRunToken.js';
 import {
   BASE_URL,
   CREATE_MONITOR,
@@ -26,7 +26,7 @@ export const addMonitor = async ({ schedule, command }) => {
     // return data;
 
     // Mock data:
-    const endpoint_key = nanoid(10);
+    const endpoint_key = generateMockEndpoint();
     return { schedule, command, endpoint_key }
   } catch (e) {
     console.log(e);

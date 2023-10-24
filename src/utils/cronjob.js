@@ -1,4 +1,4 @@
-import { addMonitor } from '../services/serverPing.js';
+import { addMonitor } from '../services/api.js';
 
 export const wrap = async (job) => {
   // const { schedule, command, endpoint_key } = await addMonitor(parse(job));

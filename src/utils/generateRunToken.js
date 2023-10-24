@@ -1,9 +1,12 @@
 import crypto from 'crypto';
 import { RUN_TOKEN_LENGTH } from "../constants/runToken.js";
 
-const generateRunToken = () => {
+export const generateRunToken = () => {
   const bytes = crypto.randomBytes(RUN_TOKEN_LENGTH / 2); // Divide by 2 to get the number of bytes
   return bytes.toString('hex');
 }
 
-export default generateRunToken;
+export const generateMockEndpoint = () => {
+  const bytes = crypto.randomBytes(RUN_TOKEN_LENGTH / 2); // Divide by 2 to get the number of bytes
+  return bytes.toString('hex');
+}

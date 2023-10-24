@@ -13,8 +13,8 @@ program.command('run')
     sundial.run(program); // Pass the program object to sundial.command1
   });
 
-program.command('command2')
-  .description('Description of command2')
-  .action(sundial.command2);
+program.command('discover')
+  .description('Discover jobs to add endpoints to!')
+  .action(sundial.discover);
 
 program.parse(process.argv);
