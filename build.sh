@@ -23,10 +23,11 @@ sudo mv ./index /usr/local/bin/sundial
 chmod +x /usr/local/bin/sundial
 
 # Modify crontab with example cronjob + output
-crontab -l > $UPDATED_CRONTAB
-echo "* * * * * /usr/local/bin/sundial run abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
+# crontab -l > $UPDATED_CRONTAB
+# echo "* * * * * /usr/local/bin/sundial run abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
 
-crontab $UPDATED_CRONTAB
+# crontab $UPDATED_CRONTAB
+# rm -r $UPDATED_CRONTAB
 
 # Cleanup
-rm -r $UPDATED_CRONTAB $ROOT_PATH/lib
+rm -r $ROOT_PATH/lib
