@@ -56,6 +56,7 @@ const run = async (program) => {
 
 // Create a function to edit the crontab interactively
 const editCrontab = (crontabText) => {
+
   const lines = crontabText.split('\n');
   const rl = readline.createInterface({
     input: process.stdin,
@@ -72,17 +73,20 @@ const editCrontab = (crontabText) => {
     }
 
     let line = lines[index];
-
-    if (!cron.validate(line)) {
+  
+    const schedule = line.split(' ').slice(0,5).join(' ');
+    if (!cron.validate(schedule)) {
       processLine(index + 1);
       return;
     }
 
-    rl.question(`Add cronjob ${index + 1}:\n${line}\n[y/n/q (quit)]: `, (answer) => {
-      if (answer.toLowerCase() === 'y' && validLine(line)) {
-        line = wrap(line);
+    rl.question(`Add cronjob ${index + 1}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
+      if (answer.toLowerCase() === 'y') {
+        line = await wrap(line);
+        console.log(modifiedLines);
       } else if (answer.toLowerCase() === 'q') {
         rl.close();
+        modifiedLines.push(lines.slice(index));
         saveCrontab(modifiedLines.join('\n'));
         return;
       }
@@ -119,7 +123,7 @@ const saveCrontab = (crontabText) => {
   process.stdin.end();
 };
 
-saveCrontab('* * * * * echo hello\n* * * * * echo hiya');
+// saveCrontab('* * * * * echo hello\n* * * * * echo hiya');
 
 
 const discover = () => {
@@ -132,6 +136,8 @@ const discover = () => {
     editCrontab(stdout);
   });
 };
+
+discover();
 
 export default {
   run,

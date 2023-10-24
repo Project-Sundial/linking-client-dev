@@ -1,4 +1,5 @@
 import axios from "axios";
+import { nanoid } from 'nanoid';
 import {
   BASE_URL,
   CREATE_MONITOR,
@@ -21,7 +22,12 @@ export const addMonitor = async ({ schedule, command }) => {
     console.log(BASE_URL + CREATE_MONITOR);
     console.log(`Initial job: ${schedule} ${command}`);
     const { data } = await axios.post(BASE_URL + PING_MONITOR + endpointKey, { schedule, command });
-    return data;
+    // With server running:
+    // return data;
+
+    // Mock data:
+    const endpoint_key = nanoid(10);
+    return { schedule, command, endpoint_key }
   } catch (e) {
     console.log(e);
   }
