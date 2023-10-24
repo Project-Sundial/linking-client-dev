@@ -7,7 +7,7 @@ export const wrap = async (job) => {
   return `${schedule} sundial run ${endpoint_key} ${command}`;
 }
 
-const parse = (job) => {
+export const parse = (job) => {
   const arr = job.split(' ');
   const schedule = arr.slice(0, 5).join(' ');
   const command = arr.slice(5).join(' ');

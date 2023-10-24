@@ -1,7 +1,7 @@
 import { spawn, exec } from 'child_process';
 import generateRunToken from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/serverPing.js';
-import { wrap } from '../utils/wrapCronjob.js';
+import { wrap, parse } from '../utils/wrapCronjob.js';
 import readline from 'readline';
 import cron from 'node-cron';
 
@@ -74,8 +74,10 @@ const editCrontab = (crontabText) => {
 
     let line = lines[index];
   
-    const schedule = line.split(' ').slice(0,5).join(' ');
-    if (!cron.validate(schedule)) {
+    const { schedule, command } = parse(line)
+    
+    if (!cron.validate(schedule) || command.startsWith('sundial run')) {
+      modifiedLines.push(line);
       processLine(index + 1);
       return;
     }
@@ -86,7 +88,7 @@ const editCrontab = (crontabText) => {
         console.log(modifiedLines);
       } else if (answer.toLowerCase() === 'q') {
         rl.close();
-        modifiedLines.push(lines.slice(index));
+        modifiedLines.push(...lines.slice(index));
         saveCrontab(modifiedLines.join('\n'));
         return;
       }
@@ -122,9 +124,6 @@ const saveCrontab = (crontabText) => {
   process.stdin.write(crontabText);
   process.stdin.end();
 };
-
-// saveCrontab('* * * * * echo hello\n* * * * * echo hiya');
-
 
 const discover = () => {
   exec('crontab -l', (error, stdout, stderr) => {
