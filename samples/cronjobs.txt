@@ -1,3 +1,4 @@
+
 * * * * * echo 'run1' >> /Users/davidperez/Documents/Capstone/Sundial/cli/cron.log
 * * * * * echo 'run2' >> /Users/davidperez/Documents/Capstone/Sundial/cli/cron.log
 * * * * * echo 'run3' >> /Users/davidperez/Documents/Capstone/Sundial/cli/cron.log
