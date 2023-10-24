@@ -19,8 +19,6 @@ export const pingMonitor = async (ping, endpointKey) => {
 
 export const addMonitor = async ({ schedule, command }) => {
   try {
-    console.log(BASE_URL + CREATE_MONITOR);
-    console.log(`Initial job: ${schedule} ${command}`);
     const { data } = await axios.post(BASE_URL + PING_MONITOR + endpointKey, { schedule, command });
     // With server running:
     // return data;

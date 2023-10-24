@@ -11,7 +11,9 @@ export const discover = () => {
       console.error(`Error listing crontab: ${error}`);
       return;
     }
+    console.log('\nCurrent crontab:');
     console.log(stdout);
+    console.log('');
     editCrontab(stdout);
   });
 };
@@ -45,11 +47,10 @@ const editCrontab = (crontabText) => {
       return;
     }
 
-    rl.question(`Add cronjob ${count}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
+    rl.question(`\nAdd cronjob ${count}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
       count += 1;
       if (answer.toLowerCase() === 'y') {
         line = await wrap(line);
-        console.log(modifiedLines);
       } else if (answer.toLowerCase() === 'q') {
         rl.close();
         modifiedLines.push(...lines.slice(index));
