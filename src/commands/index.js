@@ -1,7 +1,9 @@
 import { spawn, exec } from 'child_process';
 import generateRunToken from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/serverPing.js';
+import { wrap } from '../utils/wrapCronjob.js';
 import readline from 'readline';
+import cron from 'node-cron';
 
 const run = async (program) => {
   console.log("Start of a run!");
@@ -70,9 +72,15 @@ const editCrontab = (crontabText) => {
     }
 
     let line = lines[index];
-    rl.question(`Edit line ${index + 1}:\n${line}\n[y/n/q (quit)]: `, (answer) => {
+
+    if (!cron.validate(line)) {
+      processLine(index + 1);
+      return;
+    }
+
+    rl.question(`Add cronjob ${index + 1}:\n${line}\n[y/n/q (quit)]: `, (answer) => {
       if (answer.toLowerCase() === 'y' && validLine(line)) {
-        line 
+        line = wrap(line);
       } else if (answer.toLowerCase() === 'q') {
         rl.close();
         saveCrontab(modifiedLines.join('\n'));
@@ -89,14 +97,29 @@ const editCrontab = (crontabText) => {
 
 // Create a function to save the modified crontab
 const saveCrontab = (crontabText) => {
-  exec('crontab -', (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error saving crontab: ${error}`);
-      return;
+  const process = spawn('crontab', ['-']);
+
+  process.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  process.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  process.on('close', (code) => {
+    if (code === 0) {
+      console.log('Crontab updated.');
+    } else {
+      console.error(`Error saving crontab, exit code: ${code}`);
     }
-    console.log('Crontab updated.');
-  }).stdin.write(crontabText);
+  });
+
+  process.stdin.write(crontabText);
+  process.stdin.end();
 };
+
+saveCrontab('* * * * * echo hello\n* * * * * echo hiya');
 
 
 const discover = () => {
