@@ -39,7 +39,7 @@ const editCrontab = (crontabText) => {
     }
 
     let line = lines[index];
-    const { schedule, command } = parse(line)
+    const { schedule, command } = parse(line);
     
     if (!cron.validate(schedule) || command.startsWith('sundial run')) {
       modifiedLines.push(line);

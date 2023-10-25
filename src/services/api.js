@@ -1,5 +1,4 @@
 import axios from "axios";
-import { generateMockEndpoint } from '../utils/generateRunToken.js';
 import {
   BASE_URL,
   CREATE_MONITOR,
@@ -17,21 +16,11 @@ export const pingMonitor = async (ping, endpointKey) => {
   }
 };
 
-export const addMonitor = async ({ schedule, command }) => {
+export const createMonitor = async (newMonitor) => {
   try {
-    const { data } = await axios.post(BASE_URL + PING_MONITOR + endpointKey, { schedule, command });
-    // With server running:
-    // return data;
-
-    // Mock data:
-    const endpoint_key = generateMockEndpoint();
-    return { schedule, command, endpoint_key }
+    const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor);
+    return data;
   } catch (e) {
     console.log(e);
   }
-}
-
-// export const createMonitor = async (newMonitor) => {
-//   const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor);
-//   return data;
-// };
+};

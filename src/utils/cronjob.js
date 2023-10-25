@@ -1,9 +1,7 @@
-import { addMonitor } from '../services/api.js';
+import { createMonitor } from '../services/api.js';
 
 export const wrap = async (job) => {
-  // const { schedule, command, endpoint_key } = await addMonitor(parse(job));
-  const { schedule, command } = parse(job);
-  const endpoint_key = 'abcde'
+  const { schedule, command, endpoint_key } = await createMonitor(parse(job));
   return `${schedule} sundial run ${endpoint_key} ${command}`;
 }
 
