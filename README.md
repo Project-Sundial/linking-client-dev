@@ -10,7 +10,11 @@ The bash script build.sh allows you to:
 2. remove all the outdated files + extra files only needed for packaging
 3. place the executable in the proper folder
 4. give the executable executable permissions
-5. add an example cronjob that logs its output to a new cron.log file
+5. add some example cronjobs that log its output to a new cron.log file
 
-Whenever we want to recompile our program executable, we can with one command from the root folder: 
+Whenever we want to recompile our program executable and add new , we can with one command from the root folder: 
 `bash build.sh`
+
+DANGEROUS ACTION:
+If we'd like to reset the crontab to an empty text file for testing, we can cd into the root directory and run:
+`crontab ./samples/blank.txt`

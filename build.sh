@@ -22,11 +22,12 @@ sudo mv ./index /usr/local/bin/sundial
 # Grant read permissions
 chmod +x /usr/local/bin/sundial
 
-# Modify crontab with example cronjob + output
+# COMMENT OUT THIS SECTION (LINES 25-30) IF YOU'D LIKE TO AVOID MODIFYING CRONTAB
+# Append crontab with example cronjobs + output to log
 crontab -l > $UPDATED_CRONTAB
-echo "* * * * * /usr/local/bin/sundial exec abcde echo hello >> $ROOT_PATH/cron.log" >> $UPDATED_CRONTAB
-
+cat $ROOT_PATH/samples/cronjobs.txt >> $UPDATED_CRONTAB
 crontab $UPDATED_CRONTAB
+rm $UPDATED_CRONTAB
 
 # Cleanup
-rm -r $UPDATED_CRONTAB $ROOT_PATH/lib
+rm -r $ROOT_PATH/lib
