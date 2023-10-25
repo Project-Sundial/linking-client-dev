@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   BASE_URL,
   CREATE_MONITOR,
@@ -9,8 +8,20 @@ export const pingMonitor = async (ping, endpointKey) => {
   try {
     console.log(BASE_URL + PING_MONITOR + endpointKey);
     console.log(ping);
-    const { data } = await axios.post(BASE_URL + PING_MONITOR + endpointKey, ping);
+    const url = BASE_URL + PING_MONITOR + endpointKey;
+    const options = {
+      method: 'POST', 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(ping)
+    }
+    const response = await fetch(url, options);
+    console.log(response);
+    const data = await response.json();
     return data;
+
   } catch (e) {
     console.log(e);
   }
@@ -18,7 +29,20 @@ export const pingMonitor = async (ping, endpointKey) => {
 
 export const createMonitor = async (newMonitor) => {
   try {
-    const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor);
+    const url = BASE_URL + CREATE_MONITOR;
+    const options = {
+      method: 'POST', 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(newMonitor)
+    }
+
+  
+    const response = await fetch(url, options);
+    const data = await response.json();
+      
     return data;
   } catch (e) {
     console.log(e);
