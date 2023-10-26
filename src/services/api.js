@@ -5,11 +5,12 @@ import {
   PING_MONITOR
 } from "../constants/routes.js";
 
-export const pingMonitor = async (ping, endpointKey) => {
+export const pingMonitor = async (ping, endpointKey, event) => {
   try {
-    console.log(BASE_URL + PING_MONITOR + endpointKey);
-    console.log(ping);
-    const { data } = await axios.post(BASE_URL + PING_MONITOR + endpointKey, ping);
+    const URL = BASE_URL + PING_MONITOR + endpointKey + '?event=' + event
+    console.log(URL);
+    console.log(ping, event);
+    const { data } = await axios.post(URL, ping);
     return data;
   } catch (e) {
     console.log(e);

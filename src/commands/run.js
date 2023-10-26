@@ -3,21 +3,21 @@ import { generateRunToken } from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/api.js';
 
 export const run = async (program) => {
-  console.log("Start of a run!");
+  console.log('Start of a run!');
 
-  // Store start ping info
-  const startTime = Date.now();
-  const runToken = generateRunToken();
-  let status = "started";
-
-  const startPing = { startTime, runToken, status };
+  // Create ping info
+  const ping = { 
+    time: new Date(), 
+    runToken: generateRunToken() 
+  };
+  let event = 'started';
 
   // Store run info
   const commandString = program.args.slice(2).join(' ');
   const endpointKey = program.args[1];
 
   // Ping monitor
-  await pingMonitor(startPing, endpointKey);
+  await pingMonitor(ping, endpointKey, event);
 
   // Execute the command using the shell, inherit the standard I/O streams
   const childProcess = spawn(commandString, {
@@ -34,19 +34,18 @@ export const run = async (program) => {
   await childProcess.on('exit', async (code) => {
 
     // Store additional end ping info
-    const endTime = Date.now();
-    const endPing = { startTime, endTime, runToken };
+    ping.time = new Date();
 
     if (code === 0) {
       console.log('Command completed successfully');
-      endPing.status = "completed";
+      event = 'completed';
     } else {
       console.error(`Command failed with code ${code}`);
-      endPing.status = "failed";
+      event = 'failed';
     }
 
-    await pingMonitor(endPing, endpointKey);
+    await pingMonitor(ping, endpointKey, event);
 
-    console.log("End of a run!\n\n");
+    console.log('End of a run!\n\n');
   });
 };
