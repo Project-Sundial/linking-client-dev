@@ -86,6 +86,8 @@ const editCrontab = (crontabText) => {
       };
 
       processLineIndividual(0);
+    } else {
+      rl.close();
     }
   });
 };
