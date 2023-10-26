@@ -18,6 +18,20 @@ export const discover = () => {
   });
 };
 
+
+const processLineFull = async (modifiedLines, line) => {
+  const { schedule, command } = parse(line);
+  
+  if (!cron.validate(schedule) || command.startsWith('sundial run')) {
+    modifiedLines.push(line);
+    return;
+  }
+
+  line = await wrap(line);
+  modifiedLines.push(line);
+}
+
+
 // Edits the crontab interactively
 const editCrontab = (crontabText) => {
   crontabText = addPath(crontabText);
@@ -27,43 +41,53 @@ const editCrontab = (crontabText) => {
     input: process.stdin,
     output: process.stdout,
   });
-
   const modifiedLines = [];
-  let count = 1;
+  let count = 0;
 
-  const processLine = (index) => {
-    if (index >= lines.length) {
+
+  rl.question(`\nProcess full crontab or line-by-line? [(f)ull/(l)ine]: `, async (answer) => {
+    if (answer.toLowerCase() === 'f' || answer.toLowerCase() === 'full') {
+      for (const line of lines) {
+        await processLineFull(modifiedLines, line);
+      }
       rl.close();
       saveCrontab(modifiedLines.join('\n'));
-      return;
+    } else if (answer.toLowerCase() === 'l' || answer.toLowerCase() === 'line') {
+      const processLineIndividual = (index) => {
+        if (index >= lines.length) {
+          rl.close();
+          saveCrontab(modifiedLines.join('\n'));
+          return;
+        }
+      
+        let line = lines[index];
+        const { schedule, command } = parse(line);
+        
+        if (!cron.validate(schedule) || command.startsWith('sundial run')) {
+          modifiedLines.push(line);
+          processLineIndividual(index + 1);
+          return;
+        }
+      
+        rl.question(`\nAdd cronjob ${count}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
+          count += 1;
+          if (answer.toLowerCase() === 'y') {
+            line = await wrap(line);
+          } else if (answer.toLowerCase() === 'q') {
+            rl.close();
+            modifiedLines.push(...lines.slice(index));
+            saveCrontab(modifiedLines.join('\n'));
+            return;
+          }
+          modifiedLines.push(line);
+      
+          processLineIndividual(index + 1);
+        });
+      };
+
+      processLineIndividual(0);
     }
-
-    let line = lines[index];
-    const { schedule, command } = parse(line);
-    
-    if (!cron.validate(schedule) || command.startsWith('sundial run')) {
-      modifiedLines.push(line);
-      processLine(index + 1);
-      return;
-    }
-
-    rl.question(`\nAdd cronjob ${count}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
-      count += 1;
-      if (answer.toLowerCase() === 'y') {
-        line = await wrap(line);
-      } else if (answer.toLowerCase() === 'q') {
-        rl.close();
-        modifiedLines.push(...lines.slice(index));
-        saveCrontab(modifiedLines.join('\n'));
-        return;
-      }
-      modifiedLines.push(line);
-
-      processLine(index + 1);
-    });
-  };
-
-  processLine(0);
+  });
 };
 
 // Create a function to save the modified crontab
