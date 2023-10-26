@@ -2,7 +2,7 @@
 
 # USER SPECIFIC VARIABLES:
 
-ROOT_PATH="/Users/marymcdonald/launch-school/sundial/usable/cli"
+ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
 NODE="node18"
 PLATFORM="macos"
 ARCH="arm64"
