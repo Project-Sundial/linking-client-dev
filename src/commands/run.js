@@ -3,7 +3,7 @@ import { generateRunToken } from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/api.js';
 
 export const run = async (program) => {
-  console.log("Start of a run!");
+  console.log('Start of a run!');
 
   // Store start ping info
   const time = new Date();
@@ -48,6 +48,6 @@ export const run = async (program) => {
 
     await pingMonitor(endPing, endpointKey, event);
 
-    console.log("End of a run!\n\n");
+    console.log('End of a run!\n\n');
   });
 };
