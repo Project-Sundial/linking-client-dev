@@ -2,10 +2,10 @@
 
 # USER SPECIFIC VARIABLES:
 
-ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
+ROOT_PATH="/home/kemapi/environment/sundial/cli"
 NODE="node18"
-PLATFORM="macos"
-ARCH="arm64"
+PLATFORM="linux"
+ARCH="x64"
 UPDATED_CRONTAB="/tmp/updated_crontab"
 
 # BUILD SCRIPT
@@ -24,10 +24,10 @@ chmod +x /usr/local/bin/sundial
 
 # COMMENT OUT THIS SECTION (LINES 25-30) IF YOU'D LIKE TO AVOID MODIFYING CRONTAB
 # Append crontab with example cronjobs + output to log
-crontab -l > $UPDATED_CRONTAB
-cat $ROOT_PATH/samples/cronjobs.txt >> $UPDATED_CRONTAB
-crontab $UPDATED_CRONTAB
-rm $UPDATED_CRONTAB
+# crontab -l > $UPDATED_CRONTAB
+# cat $ROOT_PATH/samples/cronjobs.txt >> $UPDATED_CRONTAB
+# crontab $UPDATED_CRONTAB
+# rm $UPDATED_CRONTAB
 
 # Cleanup
 rm -r $ROOT_PATH/lib

@@ -6,18 +6,18 @@ export const run = async (program) => {
   console.log("Start of a run!");
 
   // Store start ping info
-  const startTime = Date.now();
+  const time = new Date();
   const runToken = generateRunToken();
-  let status = "started";
+  let event = "starting";
 
-  const startPing = { startTime, runToken, status };
+  const startPing = { time, runToken };
 
   // Store run info
   const commandString = program.args.slice(2).join(' ');
   const endpointKey = program.args[1];
 
   // Ping monitor
-  await pingMonitor(startPing, endpointKey);
+  await pingMonitor(startPing, endpointKey, event);
 
   // Execute the command using the shell, inherit the standard I/O streams
   const childProcess = spawn(commandString, {
@@ -34,18 +34,19 @@ export const run = async (program) => {
   await childProcess.on('exit', async (code) => {
 
     // Store additional end ping info
-    const endTime = Date.now();
-    const endPing = { startTime, endTime, runToken };
+    const time = new Date();
+    const endPing = { time, runToken };
 
+    let event;
     if (code === 0) {
       console.log('Command completed successfully');
-      endPing.status = "completed";
+      event = 'ending';
     } else {
       console.error(`Command failed with code ${code}`);
-      endPing.status = "failed";
+      event = 'failing';
     }
 
-    await pingMonitor(endPing, endpointKey);
+    await pingMonitor(endPing, endpointKey, event);
 
     console.log("End of a run!\n\n");
   });
