@@ -69,7 +69,7 @@ const editCrontab = (crontabText) => {
           return;
         }
       
-        rl.question(`\nAdd cronjob ${count}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
+        rl.question(`\nAdd cronjob ${count + 1}:\n${line}\n[y/n/q (quit)]: `, async (answer) => {
           count += 1;
           if (answer.toLowerCase() === 'y') {
             line = await wrap(line);
