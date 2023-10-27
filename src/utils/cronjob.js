@@ -9,5 +9,5 @@ export const parse = (job) => {
   const arr = job.split(' ');
   const schedule = arr.slice(0, 5).join(' ');
   const command = arr.slice(5).join(' ');
-  return { schedule, command }
+  return { schedule, command, type:'dual' }
 }
