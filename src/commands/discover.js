@@ -2,7 +2,7 @@ import { spawn, exec } from 'child_process';
 import { wrap, parse } from '../utils/cronjob.js';
 import readline from 'readline';
 import cron from 'node-cron';
-import { addPath } from '../utils/addPath.js';
+import { addPath, convertPath } from '../utils/path.js';
 
 // Main discover command
 export const discover = () => {
@@ -23,7 +23,7 @@ const processLineFull = async (modifiedLines, line) => {
   const { schedule, command } = parse(line);
   
   if (!cron.validate(schedule) || command.startsWith('sundial run')) {
-    modifiedLines.push(line);
+    modifiedLines.push(convertPath(line));
     return;
   }
 
@@ -64,7 +64,7 @@ const editCrontab = (crontabText) => {
         const { schedule, command } = parse(line);
         
         if (!cron.validate(schedule) || command.startsWith('sundial run')) {
-          modifiedLines.push(line);
+          modifiedLines.push(convertPath(line));
           processLineIndividual(index + 1);
           return;
         }
