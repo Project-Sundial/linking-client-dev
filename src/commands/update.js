@@ -1,16 +1,15 @@
 import { getUpdates, successfulSync } from '../services/api.js';
-import { generateCronString, parse } from '../utils/cronjob.js';
-import { exec, spawn } from 'child_process'
+import { generateCronString } from '../utils/cronjob.js';
+import { spawn } from 'child_process'
 
-const editCrontab = async (crontabText, job) => {
-  const newLine = generateCronString(job);
-  const newCrontabText = crontabText + '\n' + newLine;
-  console.log('newcrontab text:', newCrontabText);
-  saveCrontab(newCrontabText);
+const formatCronText = ( jobs ) => {
+  const wrappedJobs = jobs.map(job => generateCronString(job));
+  const crontabText = wrappedJobs.join('\n ');  
+  return crontabText;
 };
 
 const saveCrontab = (crontabText) => {
-  console.log('in save crontab', crontabText)
+  console.log('In save crontab, text:', crontabText)
   const process = spawn('crontab', ['-']);
 
   process.stdout.on('data', (data) => {
@@ -37,24 +36,16 @@ export const update = async () => {
   try {
     const updates = await getUpdates();
     console.log('the updates retrieved from docker app:', updates)
-
-    exec('crontab -l > /Users/Sofia/Programming/Capstone/capstone-project/cli/log.txt',  { timeout: 5000 }, (error, stdout, stderr) => {
-      console.log('in exec')
-      if (error) {
-        console.error(`Error listing crontab: ${error}`);
-        return;
-      }
-      if (stderr) {
-        console.error(`stderr: ${stderr}`);
-        return;
-      }
-      console.log('\nCurrent crontab:');
-      console.log(stdout);
-      console.log('');
-      editCrontab(stdout, updates);
-    });
-    await successfulSync(updates);
+    if (!updates) {
+      console.log('No updates retrieved.');
+      return;
+    }
+    const crontabText = formatCronText(updates);
+    console.log('Final crontab text:', crontabText);
+    saveCrontab(crontabText);
+    
+    // await successfulSync(updates);
   } catch (error) {
-    console.log('error fetching updated from docker app', error)
+    console.log('error fetching updated jobs from docker app', error)
   }
 };

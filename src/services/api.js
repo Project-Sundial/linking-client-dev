@@ -34,11 +34,11 @@ export const getUpdates = async () => {
   }
 };
 
-export const successfulSync = async (updates) => {
-  try {
-    const { data } = await axios.post(BASE_URL + '/api/synced', updates);
-    return data;
-  } catch (e) {
-    console.error(e);
-  }
-};
+// export const successfulSync = async (updates) => {
+//   try {
+//     const { data } = await axios.post(BASE_URL + '/api/synced', updates);
+//     return data;
+//   } catch (e) {
+//     console.error(e);
+//   }
+// };

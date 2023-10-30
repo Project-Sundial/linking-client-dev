@@ -22,9 +22,6 @@ sudo mv ./index /usr/local/bin/sundial
 # Grant read permissions
 chmod +x /usr/local/bin/sundial
 
-# cd ./http_server
-# node server.js
-
 # Kill old server processes if they exist
 # Can also run this when done to terminate server process
 pkill -f "node server.js"
@@ -39,9 +36,9 @@ node server.js
 # COMMENT OUT THIS SECTION (LINES 25-30) IF YOU'D LIKE TO AVOID MODIFYING CRONTAB
 # Append crontab with example cronjobs + output to log
 # crontab -l > $UPDATED_CRONTAB
-cat $ROOT_PATH/samples/cronjobs.txt >> $UPDATED_CRONTAB
-crontab $UPDATED_CRONTAB
-rm $UPDATED_CRONTAB
+# cat $ROOT_PATH/samples/cronjobs.txt >> $UPDATED_CRONTAB
+# crontab $UPDATED_CRONTAB
+# rm $UPDATED_CRONTAB
 
 # Cleanup
 rm -r $ROOT_PATH/lib
