@@ -17,4 +17,8 @@ program.command('discover')
   .description('Discover jobs to add endpoints to!')
   .action(sundial.discover);
 
+program.command('update')
+.description('Get updates to crontab!')
+.action(sundial.update);
+
 program.parse(process.argv);
