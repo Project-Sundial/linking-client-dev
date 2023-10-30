@@ -10,12 +10,15 @@ program
 program.command('run')
   .description('Pings monitor and runs cron job')
   .action(() => {
-    sundial.run(program); // Pass the program object to sundial.command1
+    sundial.run(program);
   });
 
 program.command('discover')
   .description('Discover jobs to add endpoints to!')
-  .action(sundial.discover);
+  .option('-f, --full', 'Discover all jobs and monitors with one command!')
+  .action((options) => {
+    sundial.discover(options);
+  });
 
 program.command('update')
 .description('Get updates to crontab!')
