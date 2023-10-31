@@ -1,19 +1,33 @@
-the updates retrieved from docker app: [
-  { command: 'test', schedule: '* * * * *', endpointKey: '334534t' },
-  { endpointKey: 'per_RrMDcu', command: 'hey', schedule: '* * * * *' },
-  { endpointKey: 'SRWEXhaggT', command: 'hey', schedule: '* * * * *' },
-  {
-    endpointKey: 'Un3Am5iRq7',
-    command: 'heyfromPostpam',
-    schedule: '* * * * *'
-  }
-]
-Final crontab text: * * * * * sundial run 334534t test
- * * * * * sundial run per_RrMDcu hey
- * * * * * sundial run SRWEXhaggT hey
- * * * * * sundial run Un3Am5iRq7 heyfromPostpam
-In save crontab, text: * * * * * sundial run 334534t test
- * * * * * sundial run per_RrMDcu hey
- * * * * * sundial run SRWEXhaggT hey
- * * * * * sundial run Un3Am5iRq7 heyfromPostpam
+the updates retrieved from docker app: {
+  add: [
+    {
+      command: 'heyfromPostpam',
+      schedule: '* * * * *',
+      endpointKey: '1'
+    }
+  ],
+  delete: [],
+  update: []
+}
+Current crontab: 
+* * * * * sundial run 1 heyfromPostpam
+Curent 
+* * * * * sundial run 1 heyfromPostpam
+New data {
+  add: [
+    {
+      command: 'heyfromPostpam',
+      schedule: '* * * * *',
+      endpointKey: '1'
+    }
+  ],
+  delete: [],
+  update: []
+}
+Final crontab text before save: 
+* * * * * sundial run 1 heyfromPostpam
+* * * * * sundial run 1 heyfromPostpam
+In save crontab, text: 
+* * * * * sundial run 1 heyfromPostpam
+* * * * * sundial run 1 heyfromPostpam
 Crontab updated.

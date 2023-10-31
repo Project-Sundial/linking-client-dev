@@ -73,7 +73,7 @@ const generateCrontab = async ( newData ) => {
       newCrontab.push(line);
     };
   } else {
-    newCrontab.push(currentCrontab);
+    newCrontab.push(currentCrontab); // assumes the job will not already be in file
   }
 
   newData.add.forEach(job => newCrontab.push(generateCronString(job)));
@@ -104,9 +104,18 @@ const saveCrontab = (crontabText) => {
   process.stdin.end();
 };
 
-const update = async () => {
+export const update = async () => {
   try {
-    const updates = await getUpdates();
+    // const updates = await getUpdates();
+    const updates = { //for testing
+        "add": [{
+            "command": "heyfromPostpam",
+            "schedule": "* * * * *",
+            "endpointKey": "1"
+        }],
+        "delete": [],
+        "update": []
+    }
     console.log('the updates retrieved from docker app:', updates)
     if (!updates) {
       console.log('No updates retrieved.');
@@ -119,5 +128,3 @@ const update = async () => {
     console.log('Error fetching updated jobs from app.', error);
   }
 };
-
-export default update;
