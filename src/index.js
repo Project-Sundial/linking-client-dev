@@ -20,4 +20,8 @@ program.command('discover')
     sundial.discover(options);
   });
 
+program.command('update')
+.description('Get updates to crontab!')
+.action(sundial.update);
+
 program.parse(process.argv);

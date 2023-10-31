@@ -1,0 +1,6 @@
+the updates retrieved from docker app: [
+  { endpointKey: 'rue1HqoByF', command: 'hey', schedule: '* * * * *' }
+]
+Final crontab text: * * * * * sundial run rue1HqoByF hey
+In save crontab, text: * * * * * sundial run rue1HqoByF hey
+Crontab updated.
