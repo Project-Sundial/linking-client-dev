@@ -1,6 +1,19 @@
 the updates retrieved from docker app: [
-  { endpointKey: 'rue1HqoByF', command: 'hey', schedule: '* * * * *' }
+  { command: 'test', schedule: '* * * * *', endpointKey: '334534t' },
+  { endpointKey: 'per_RrMDcu', command: 'hey', schedule: '* * * * *' },
+  { endpointKey: 'SRWEXhaggT', command: 'hey', schedule: '* * * * *' },
+  {
+    endpointKey: 'Un3Am5iRq7',
+    command: 'heyfromPostpam',
+    schedule: '* * * * *'
+  }
 ]
-Final crontab text: * * * * * sundial run rue1HqoByF hey
-In save crontab, text: * * * * * sundial run rue1HqoByF hey
+Final crontab text: * * * * * sundial run 334534t test
+ * * * * * sundial run per_RrMDcu hey
+ * * * * * sundial run SRWEXhaggT hey
+ * * * * * sundial run Un3Am5iRq7 heyfromPostpam
+In save crontab, text: * * * * * sundial run 334534t test
+ * * * * * sundial run per_RrMDcu hey
+ * * * * * sundial run SRWEXhaggT hey
+ * * * * * sundial run Un3Am5iRq7 heyfromPostpam
 Crontab updated.
