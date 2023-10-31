@@ -1,12 +1,84 @@
-import { getUpdates, successfulSync } from '../services/api.js';
+import { getUpdates } from '../services/api.js';
 import { generateCronString } from '../utils/cronjob.js';
-import { spawn } from 'child_process'
+import { exec, spawn } from 'child_process'
 
-const formatCronText = ( jobs ) => {
-  const wrappedJobs = jobs.map(job => generateCronString(job));
-  const crontabText = wrappedJobs.join('\n ');  
-  return crontabText;
-};
+const fetchCrontab = async () => {
+  const retrieveCurrentCrontab = async () => {
+    return new Promise((resolve, reject) => {
+      exec('crontab -l', (error, stdout, stderr) => {
+        if (error || stderr) {
+          console.error(`Error listing crontab: ${error} ${stderr}`);
+          reject(error);
+          return;
+        }
+  
+        resolve(stdout);
+      });
+    });
+  };
+
+  try {
+    const currentCrontab = await retrieveCurrentCrontab();
+    console.log('Current crontab:', currentCrontab );
+    return currentCrontab;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+const hasUpdatesorDeletes = ( newCronData ) => {
+  return newCronData.delete.length > 0 || newCronData.update.length > 0;
+}
+
+const getLinesEndpointKey = (line) => {
+  const arr = line.split(' ');
+  let command = arr.slice(5).join(' ');
+  let endpointKey;
+  if (command.startsWith('sundial run')) {
+    endpointKey = arr.slice(7,8)[0];
+  }
+
+  return endpointKey;
+}
+
+
+const generateCrontab = async ( newData ) => {
+  const currentCrontab = await fetchCrontab();
+  const newCrontab = [];
+  console.log("Curent", currentCrontab)
+  console.log("New data", newData)
+
+  if (hasUpdatesorDeletes(newData)) {
+    const lines = currentCrontab.split('\n');
+
+    for (const line of lines) {
+      if (line.length < 1) {
+        continue;
+      }
+      if (line[0] === '#') {
+        newCrontab.push(line);
+        continue;
+      }
+      const endpointKey = getLinesEndpointKey(line);
+      const deletedJob = newData.delete.find(job => job.endpointKey === endpointKey);
+      if (deletedJob) {
+        continue;
+      }
+      const updatedJob = newData.update.find(job => job.endpointKey === endpointKey);
+      if (updatedJob) {
+        newCrontab.push(generateCronString(updatedJob));
+        continue;
+      }
+
+      newCrontab.push(line);
+    };
+  } else {
+    newCrontab.push(currentCrontab);
+  }
+
+  newData.add.forEach(job => newCrontab.push(generateCronString(job)));
+  return newCrontab.join('\n');
+}
 
 const saveCrontab = (crontabText) => {
   console.log('In save crontab, text:', crontabText)
@@ -32,7 +104,7 @@ const saveCrontab = (crontabText) => {
   process.stdin.end();
 };
 
-export const update = async () => {
+const update = async () => {
   try {
     const updates = await getUpdates();
     console.log('the updates retrieved from docker app:', updates)
@@ -40,12 +112,12 @@ export const update = async () => {
       console.log('No updates retrieved.');
       return;
     }
-    const crontabText = formatCronText(updates);
-    console.log('Final crontab text:', crontabText);
+    const crontabText = await generateCrontab(updates);
+    console.log('Final crontab text before save:', crontabText);
     saveCrontab(crontabText);
-    
-    // await successfulSync(updates);
   } catch (error) {
-    console.log('error fetching updated jobs from docker app', error)
+    console.log('Error fetching updated jobs from app.', error);
   }
 };
+
+export default update;
