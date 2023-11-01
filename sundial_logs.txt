@@ -1,197 +1,23 @@
-[
-  {
-    id: 11,
-    endpoint_key: '9BfqHOpC38',
-    name: 'item',
-    schedule: '* * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:37:41.007Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 12,
-    endpoint_key: 'ksjd0q8XPf',
-    name: 'job',
-    schedule: '3 * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:47:03.983Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 13,
-    endpoint_key: 'svcKOfGRsR',
-    name: 'a job',
-    schedule: '4 * * * *',
-    command: 'unique',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:48:45.283Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 14,
-    endpoint_key: '0itzKbXvtx',
-    name: 'namess',
-    schedule: '* * * * *',
-    command: 'print',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:56:36.421Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  }
-]
-The updates retrieved from docker app: [
-  {
-    id: 11,
-    endpoint_key: '9BfqHOpC38',
-    name: 'item',
-    schedule: '* * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:37:41.007Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 12,
-    endpoint_key: 'ksjd0q8XPf',
-    name: 'job',
-    schedule: '3 * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:47:03.983Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 13,
-    endpoint_key: 'svcKOfGRsR',
-    name: 'a job',
-    schedule: '4 * * * *',
-    command: 'unique',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:48:45.283Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 14,
-    endpoint_key: '0itzKbXvtx',
-    name: 'namess',
-    schedule: '* * * * *',
-    command: 'print',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:56:36.421Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  }
-]
-Current crontab: PATH=/usr/local/bin:$PATH
+The updates retrieved from docker app: undefined
+Current crontab: #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run YpcBUC6VZl echo hi
-* * * * * sundial run 9BfqHOpC38 command
-3 * * * * sundial run ksjd0q8XPf command
-4 * * * * sundial run svcKOfGRsR unique
-* * * * * sundial run 0itzKbXvtx print
-Curent PATH=/usr/local/bin:$PATH
+Curent #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run YpcBUC6VZl echo hi
-* * * * * sundial run 9BfqHOpC38 command
-3 * * * * sundial run ksjd0q8XPf command
-4 * * * * sundial run svcKOfGRsR unique
-* * * * * sundial run 0itzKbXvtx print
-New data [
-  {
-    id: 11,
-    endpoint_key: '9BfqHOpC38',
-    name: 'item',
-    schedule: '* * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:37:41.007Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 12,
-    endpoint_key: 'ksjd0q8XPf',
-    name: 'job',
-    schedule: '3 * * * *',
-    command: 'command',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:47:03.983Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 13,
-    endpoint_key: 'svcKOfGRsR',
-    name: 'a job',
-    schedule: '4 * * * *',
-    command: 'unique',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:48:45.283Z',
-    tolerable_runtime: 4,
-    grace_period: 5,
-    type: 'dual'
-  },
-  {
-    id: 14,
-    endpoint_key: '0itzKbXvtx',
-    name: 'namess',
-    schedule: '* * * * *',
-    command: 'print',
-    active: true,
-    failing: false,
-    created_at: '2023-11-01T16:56:36.421Z',
-    tolerable_runtime: 5,
-    grace_period: 5,
-    type: 'dual'
-  }
-]
+New data [ { schedule: '* * * * *', endpointKey: '1', command: 'echo hey' } ]
 [
-  'PATH=/usr/local/bin:$PATH',
+  '#* * * * * sundial run 1 heyfromPostpam',
+  '#* * * * * sundial run 1 heyfromPostpam',
   '',
-  '* * * * * sundial run 9BfqHOpC38 command',
-  '3 * * * * sundial run ksjd0q8XPf command',
-  '4 * * * * sundial run svcKOfGRsR unique',
-  '* * * * * sundial run 0itzKbXvtx print'
+  '* * * * * sundial run 1 echo hey'
 ]
-Final crontab text before save: PATH=/usr/local/bin:$PATH
+Final crontab text before save: #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run 9BfqHOpC38 command
-3 * * * * sundial run ksjd0q8XPf command
-4 * * * * sundial run svcKOfGRsR unique
-* * * * * sundial run 0itzKbXvtx print
-In save crontab, text: PATH=/usr/local/bin:$PATH
+* * * * * sundial run 1 echo hey
+In save crontab, text: #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run 9BfqHOpC38 command
-3 * * * * sundial run ksjd0q8XPf command
-4 * * * * sundial run svcKOfGRsR unique
-* * * * * sundial run 0itzKbXvtx print
+* * * * * sundial run 1 echo hey
 Crontab updated.
