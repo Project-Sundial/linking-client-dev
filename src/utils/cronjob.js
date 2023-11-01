@@ -6,8 +6,8 @@ export const wrap = async (job) => {
 }
 
 export const generateCronString = (job) => {
-  const { schedule, command, endpointKey } = job
-  return `${schedule} sundial run ${endpointKey} ${command}`;
+  const { schedule, command, endpoint_key } = job
+  return `${schedule} sundial run ${endpoint_key} ${command}`;
 }
 
 export const parse = (job) => {
