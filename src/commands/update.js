@@ -1,4 +1,5 @@
 import { getUpdates } from '../services/api.js';
+import { parse } from '../utils/cronjob.js';
 import { generateCronString } from '../utils/cronjob.js';
 import { exec, spawn } from 'child_process'
 import cron from 'node-cron';
@@ -28,7 +29,7 @@ const fetchCrontab = async () => {
 }
 
 const isJob = ( line ) => {
-  const schedule = line.slice(0,10)
+  const { schedule } = parse(line);
   return cron.validate(schedule);
 }
 

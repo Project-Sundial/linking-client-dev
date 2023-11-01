@@ -2,10 +2,10 @@
 
 # USER SPECIFIC VARIABLES:
 
-ROOT_PATH="Users/Sofia/Programming/Capstone/capstone-project/cli"
+ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
 NODE="node18"
 PLATFORM="macos"
-ARCH="x64"
+ARCH="arm64"
 UPDATED_CRONTAB="/tmp/updated_crontab"
 
 # BUILD SCRIPT
@@ -21,6 +21,9 @@ sudo mv ./index /usr/local/bin/sundial
 
 # Grant read permissions
 chmod +x /usr/local/bin/sundial
+
+# Cleanup
+rm -r $ROOT_PATH/lib
 
 # Kill old server processes if they exist
 # Can also run this when done to terminate server process
@@ -40,5 +43,3 @@ node server.js
 # crontab $UPDATED_CRONTAB
 # rm $UPDATED_CRONTAB
 
-# Cleanup
-rm -r $ROOT_PATH/lib
