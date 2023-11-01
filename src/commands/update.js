@@ -1,6 +1,7 @@
 import { getUpdates } from '../services/api.js';
 import { generateCronString } from '../utils/cronjob.js';
 import { exec, spawn } from 'child_process'
+import cron from 'node-cron';
 
 const fetchCrontab = async () => {
   const retrieveCurrentCrontab = async () => {
@@ -26,21 +27,11 @@ const fetchCrontab = async () => {
   }
 }
 
-const hasUpdatesorDeletes = ( newCronData ) => {
-  return newCronData.delete.length > 0 || newCronData.update.length > 0;
-}
-
-const getLinesEndpointKey = (line) => {
+const isJob = ( line ) => {
   const arr = line.split(' ');
-  let command = arr.slice(5).join(' ');
-  let endpointKey;
-  if (command.startsWith('sundial run')) {
-    endpointKey = arr.slice(7,8)[0];
-  }
-
-  return endpointKey;
+  const schedule = arr.slice(0, 5).join(' ');
+  return cron.validate(schedule);
 }
-
 
 const generateCrontab = async ( newData ) => {
   const currentCrontab = await fetchCrontab();
@@ -48,39 +39,19 @@ const generateCrontab = async ( newData ) => {
   console.log("Curent", currentCrontab)
   console.log("New data", newData)
 
-  if (hasUpdatesorDeletes(newData)) {
-    const lines = currentCrontab.split('\n');
-
-    for (const line of lines) {
-      if (line.length < 1) {
-        continue;
-      }
-      if (line[0] === '#') {
-        newCrontab.push(line);
-        continue;
-      }
-      const endpointKey = getLinesEndpointKey(line);
-      const deletedJob = newData.delete.find(job => job.endpointKey === endpointKey);
-      if (deletedJob) {
-        continue;
-      }
-      const updatedJob = newData.update.find(job => job.endpointKey === endpointKey);
-      if (updatedJob) {
-        newCrontab.push(generateCronString(updatedJob));
-        continue;
-      }
-
+  const lines = currentCrontab.split('\n');
+  for (const line of lines) {
+    if (!isJob(line)) {
       newCrontab.push(line);
-    };
-  } else {
-    newCrontab.push(currentCrontab); // assumes the job will not already be in file
-  }
+    }
+  };
 
-  newData.add.forEach(job => newCrontab.push(generateCronString(job)));
+  newData.forEach(job => newCrontab.push(generateCronString(job)));
+  console.log(newCrontab)
   return newCrontab.join('\n');
 }
 
-const saveCrontab = (crontabText) => {
+const saveCrontab = ( crontabText ) => {
   console.log('In save crontab, text:', crontabText)
   const process = spawn('crontab', ['-']);
 
@@ -106,17 +77,9 @@ const saveCrontab = (crontabText) => {
 
 export const update = async () => {
   try {
-    // const updates = await getUpdates();
-    const updates = { //for testing
-        "add": [{
-            "command": "heyfromPostpam",
-            "schedule": "* * * * *",
-            "endpointKey": "1"
-        }],
-        "delete": [],
-        "update": []
-    }
-    console.log('the updates retrieved from docker app:', updates)
+    const updates = await getUpdates();
+
+    console.log('The updates retrieved from docker app:', updates)
     if (!updates) {
       console.log('No updates retrieved.');
       return;
@@ -125,6 +88,6 @@ export const update = async () => {
     console.log('Final crontab text before save:', crontabText);
     saveCrontab(crontabText);
   } catch (error) {
-    console.log('Error fetching updated jobs from app.', error);
+    console.log('Error updating the crontab.', error);
   }
 };
