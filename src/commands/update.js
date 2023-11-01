@@ -28,8 +28,7 @@ const fetchCrontab = async () => {
 }
 
 const isJob = ( line ) => {
-  const arr = line.split(' ');
-  const schedule = arr.slice(0, 5).join(' ');
+  const schedule = line.slice(0,10)
   return cron.validate(schedule);
 }
 
