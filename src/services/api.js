@@ -3,7 +3,6 @@ import {
   BASE_URL,
   CREATE_MONITOR,
   PING_MONITOR,
-  GET_UPDATES,
   SYNC_MODE,
   GET_MONITORS
 } from "../constants/routes.js";
@@ -30,7 +29,6 @@ export const createMonitor = async (newMonitor) => {
 export const getUpdates = async () => {
   try {
     const { data } = await axios.get(BASE_URL + GET_MONITORS, SYNC_MODE);
-    console.log(data);
     return data;
   } catch (e) {
     console.error(e);
