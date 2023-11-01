@@ -1,14 +1,56 @@
-import { getUpdates, successfulSync } from '../services/api.js';
+import { getUpdates } from '../services/api.js';
 import { generateCronString } from '../utils/cronjob.js';
-import { spawn } from 'child_process'
+import { exec, spawn } from 'child_process'
+import cron from 'node-cron';
 
-const formatCronText = ( jobs ) => {
-  const wrappedJobs = jobs.map(job => generateCronString(job));
-  const crontabText = wrappedJobs.join('\n ');  
-  return crontabText;
-};
+const fetchCrontab = async () => {
+  const retrieveCurrentCrontab = async () => {
+    return new Promise((resolve, reject) => {
+      exec('crontab -l', (error, stdout, stderr) => {
+        if (error || stderr) {
+          console.error(`Error listing crontab: ${error} ${stderr}`);
+          reject(error);
+          return;
+        }
+  
+        resolve(stdout);
+      });
+    });
+  };
 
-const saveCrontab = (crontabText) => {
+  try {
+    const currentCrontab = await retrieveCurrentCrontab();
+    console.log('Current crontab:', currentCrontab );
+    return currentCrontab;
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+const isJob = ( line ) => {
+  const schedule = line.slice(0,10)
+  return cron.validate(schedule);
+}
+
+const generateCrontab = async ( newData ) => {
+  const currentCrontab = await fetchCrontab();
+  const newCrontab = [];
+  console.log("Curent", currentCrontab)
+  console.log("New data", newData)
+
+  const lines = currentCrontab.split('\n');
+  for (const line of lines) {
+    if (!isJob(line)) {
+      newCrontab.push(line);
+    }
+  };
+
+  newData.forEach(job => newCrontab.push(generateCronString(job)));
+  console.log(newCrontab)
+  return newCrontab.join('\n');
+}
+
+const saveCrontab = ( crontabText ) => {
   console.log('In save crontab, text:', crontabText)
   const process = spawn('crontab', ['-']);
 
@@ -35,17 +77,15 @@ const saveCrontab = (crontabText) => {
 export const update = async () => {
   try {
     const updates = await getUpdates();
-    console.log('the updates retrieved from docker app:', updates)
+    console.log('The updates retrieved from docker app:', updates)
     if (!updates) {
       console.log('No updates retrieved.');
       return;
     }
-    const crontabText = formatCronText(updates);
-    console.log('Final crontab text:', crontabText);
+    const crontabText = await generateCrontab(updates);
+    console.log('Final crontab text before save:', crontabText);
     saveCrontab(crontabText);
-    
-    // await successfulSync(updates);
   } catch (error) {
-    console.log('error fetching updated jobs from docker app', error)
+    console.log('Error updating the crontab.', error);
   }
 };
