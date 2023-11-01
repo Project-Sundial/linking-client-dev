@@ -77,7 +77,6 @@ const saveCrontab = ( crontabText ) => {
 export const update = async () => {
   try {
     const updates = await getUpdates();
-
     console.log('The updates retrieved from docker app:', updates)
     if (!updates) {
       console.log('No updates retrieved.');

@@ -1,32 +1,23 @@
-The updates retrieved from docker app: []
-Current crontab: HEY=SOMETHING
-#* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
-
-* * * * * sundial run 1 heyfromPostpam
-Curent HEY=SOMETHING
-#* * * * * sundial run 1 heyfromPostpam
+The updates retrieved from docker app: undefined
+Current crontab: #* * * * * sundial run 1 heyfromPostpam
 #* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run 1 heyfromPostpam
-New data []
-hey
-hey
-hey
-hey
-hey
+Curent #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
+
+New data [ { schedule: '* * * * *', endpointKey: '1', command: 'echo hey' } ]
 [
-  'HEY=SOMETHING',
   '#* * * * * sundial run 1 heyfromPostpam',
   '#* * * * * sundial run 1 heyfromPostpam',
-  ''
+  '',
+  '* * * * * sundial run 1 echo hey'
 ]
-Final crontab text before save: HEY=SOMETHING
-#* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
-
-In save crontab, text: HEY=SOMETHING
-#* * * * * sundial run 1 heyfromPostpam
+Final crontab text before save: #* * * * * sundial run 1 heyfromPostpam
 #* * * * * sundial run 1 heyfromPostpam
 
+* * * * * sundial run 1 echo hey
+In save crontab, text: #* * * * * sundial run 1 heyfromPostpam
+#* * * * * sundial run 1 heyfromPostpam
+
+* * * * * sundial run 1 echo hey
 Crontab updated.
