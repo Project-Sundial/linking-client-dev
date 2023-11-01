@@ -4,9 +4,12 @@ const { exec } = require('child_process');
 const app = express();
 const port = 56789;
 
-const logFile = '/Users/Sofia/Programming/Capstone/capstone-project/cli/sundial_logs.txt'
+const logFile = '/Users/davidperez/Documents/Capstone/Sundial/cli/sundial_logs.txt'
+
+app.use(express.json());
 
 app.post('/trigger-sync', (req, res) => {
+  console.log('Working!');
   const executablePath = `/usr/local/bin/sundial update > ${logFile} 2>&1`;
 
   exec(executablePath, (error, stdout, stderr) => {
