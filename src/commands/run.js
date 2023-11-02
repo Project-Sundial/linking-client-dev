@@ -16,7 +16,7 @@ export const run = async (program) => {
   const endpointKey = program.args[1];
 
   // Ping monitor
-  await pingMonitor(startPing, endpointKey, event);
+  pingMonitor(startPing, endpointKey, event);
 
   // Execute the command using the shell, inherit the standard I/O streams
   const childProcess = spawn(commandString, {
@@ -44,7 +44,7 @@ export const run = async (program) => {
       event = 'failing';
     }
 
-    await pingMonitor(endPing, endpointKey, event);
+    pingMonitor(endPing, endpointKey, event);
 
   });
 };

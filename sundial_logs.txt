@@ -1,23 +1,42 @@
-The updates retrieved from docker app: undefined
-Current crontab: #* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
+The updates retrieved from docker app: []
+Current crontab: PATH=/usr/local/bin:$PATH
+#fake path
 
-Curent #* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
 
-New data [ { schedule: '* * * * *', endpointKey: '1', command: 'echo hey' } ]
+
+#* * * * * sundial run bvc8NqQwZ0 echo hey
+
+* * * * * sundial run pHsjv_HRzu echo hey
+Curent PATH=/usr/local/bin:$PATH
+#fake path
+
+
+
+#* * * * * sundial run bvc8NqQwZ0 echo hey
+
+* * * * * sundial run pHsjv_HRzu echo hey
+New data []
 [
-  '#* * * * * sundial run 1 heyfromPostpam',
-  '#* * * * * sundial run 1 heyfromPostpam',
+  'PATH=/usr/local/bin:$PATH',
+  '#fake path',
   '',
-  '* * * * * sundial run 1 echo hey'
+  '',
+  '',
+  '#* * * * * sundial run bvc8NqQwZ0 echo hey',
+  ''
 ]
-Final crontab text before save: #* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
+Final crontab text before save: PATH=/usr/local/bin:$PATH
+#fake path
 
-* * * * * sundial run 1 echo hey
-In save crontab, text: #* * * * * sundial run 1 heyfromPostpam
-#* * * * * sundial run 1 heyfromPostpam
 
-* * * * * sundial run 1 echo hey
+
+#* * * * * sundial run bvc8NqQwZ0 echo hey
+
+In save crontab, text: PATH=/usr/local/bin:$PATH
+#fake path
+
+
+
+#* * * * * sundial run bvc8NqQwZ0 echo hey
+
 Crontab updated.
