@@ -23,7 +23,6 @@ export const pingMonitor = async (ping, endpointKey, event) => {
 export const createMonitor = async (newMonitor) => {
   try {
     const HEADERS = getHeaders();
-    console.log(HEADERS);
     const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor, HEADERS);
     return data;
   } catch (e) {
