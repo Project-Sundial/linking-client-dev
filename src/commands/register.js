@@ -7,6 +7,12 @@ export const register = async (args) => {
     return;
   }
 
+  if (process.getuid() !== 0) {
+    console.error('This command requires administrative (sudo) privileges.\n\n'+
+      `Please enter the following command:\n\nsudo sundial register ${args[1]}`);
+    return;
+  }
+
   const data = {
     API_KEY: args[1],
   };
