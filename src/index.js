@@ -10,7 +10,7 @@ program
 program.command('run')
   .description('Pings monitor and runs cron job')
   .action(() => {
-    sundial.run(program);
+    sundial.run(program.args);
   });
 
 program.command('discover')
@@ -23,5 +23,11 @@ program.command('discover')
 program.command('update')
 .description('Get updates to crontab!')
 .action(sundial.update);
+
+program.command('register')
+  .description('Registers sundial application with the CLI!')
+  .action(() => {
+    sundial.register(program.args);
+  });
 
 program.parse(process.argv);
