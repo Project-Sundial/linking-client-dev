@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 import { generateRunToken } from '../utils/generateRunToken.js'
 import { pingMonitor } from '../services/api.js';
 
-export const run = async (program) => {
+export const run = async (args) => {
 
   // Store start ping info
   const time = new Date();
@@ -12,8 +12,8 @@ export const run = async (program) => {
   const startPing = { time, runToken };
 
   // Store run info
-  const commandString = program.args.slice(2).join(' ');
-  const endpointKey = program.args[1];
+  const commandString = args.slice(2).join(' ');
+  const endpointKey = args[1];
 
   // Ping monitor
   pingMonitor(startPing, endpointKey, event);
