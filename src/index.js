@@ -7,6 +7,12 @@ program
   .version('1.0.0')
   .description('My Command Line Tool');
 
+program.command('register')
+  .description('Registers sundial application with the CLI!')
+  .action(() => {
+    sundial.register(program.args);
+  });
+
 program.command('run')
   .description('Pings monitor and runs cron job')
   .action(() => {
@@ -23,11 +29,5 @@ program.command('discover')
 program.command('update')
 .description('Get updates to crontab!')
 .action(sundial.update);
-
-program.command('register')
-  .description('Registers sundial application with the CLI!')
-  .action(() => {
-    sundial.register(program.args);
-  });
 
 program.parse(process.argv);

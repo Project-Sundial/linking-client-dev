@@ -6,11 +6,12 @@ import {
   GET_MONITORS
 } from "../constants/routes.js";
 import {
-  HEADERS
-} from "../constants/headers.js";
+  getHeaders
+} from "../services/headers.js";
 
 export const pingMonitor = async (ping, endpointKey, event) => {
   try {
+    const HEADERS = getHeaders();
     const URL = BASE_URL + PING_MONITOR + endpointKey + '?event=' + event
     const { data } = await axios.post(URL, ping, HEADERS);
     return data;
@@ -21,6 +22,7 @@ export const pingMonitor = async (ping, endpointKey, event) => {
 
 export const createMonitor = async (newMonitor) => {
   try {
+    const HEADERS = getHeaders();
     console.log(HEADERS);
     const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor, HEADERS);
     return data;
@@ -31,6 +33,7 @@ export const createMonitor = async (newMonitor) => {
 
 export const getUpdates = async () => {
   try {
+    const HEADERS = getHeaders();
     const { data } = await axios.get(BASE_URL + GET_MONITORS, HEADERS);
     return data;
   } catch (e) {
