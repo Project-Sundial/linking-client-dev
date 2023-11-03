@@ -2,10 +2,10 @@
 
 # USER SPECIFIC VARIABLES:
 
-ROOT_PATH="Users/Sofia/Programming/Capstone/capstone-project/cli"
+ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
 NODE="node18"
 PLATFORM="macos"
-ARCH="x64"
+ARCH="arm64"
 UPDATED_CRONTAB="/tmp/updated_crontab"
 # BUILD SCRIPT
 
