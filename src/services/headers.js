@@ -17,7 +17,7 @@ export const getHeaders = () => {
   return {
     headers: {
       'X-Sync-Mode': 'CLI',
-      'Authorization': `Basic ${btoa(apiKey)}`,
+      'Authorization': `Bearer ${btoa(apiKey)}`,
     },
   };
 }
