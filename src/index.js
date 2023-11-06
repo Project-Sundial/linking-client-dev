@@ -7,10 +7,16 @@ program
   .version('1.0.0')
   .description('My Command Line Tool');
 
+program.command('register')
+  .description('Registers sundial application with the CLI!')
+  .action(() => {
+    sundial.register(program.args);
+  });
+
 program.command('run')
   .description('Pings monitor and runs cron job')
   .action(() => {
-    sundial.run(program);
+    sundial.run(program.args);
   });
 
 program.command('discover')
