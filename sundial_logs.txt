@@ -1,42 +1,110 @@
-The updates retrieved from docker app: []
+The updates retrieved from docker app: [
+  {
+    id: 25,
+    endpoint_key: 'M_x8imC1xH',
+    name: 'hello world',
+    schedule: '* * * * *',
+    command: 'echo nice',
+    active: true,
+    failing: false,
+    created_at: '2023-11-02T03:01:41.913Z',
+    tolerable_runtime: 22,
+    grace_period: 5,
+    type: 'dual'
+  },
+  {
+    id: 29,
+    endpoint_key: 'XK74-ztlt4',
+    name: null,
+    schedule: '* * * * *',
+    command: 'echo hello',
+    active: true,
+    failing: false,
+    created_at: '2023-11-03T03:21:39.204Z',
+    tolerable_runtime: 25,
+    grace_period: 5,
+    type: 'dual'
+  },
+  {
+    id: 30,
+    endpoint_key: 'dlMnzAOc8x',
+    name: null,
+    schedule: '* * * * *',
+    command: 'echo hi',
+    active: true,
+    failing: true,
+    created_at: '2023-11-03T03:21:43.618Z',
+    tolerable_runtime: 25,
+    grace_period: 5,
+    type: 'dual'
+  }
+]
 Current crontab: PATH=/usr/local/bin:$PATH
-#fake path
 
-
-
-#* * * * * sundial run bvc8NqQwZ0 echo hey
-
-* * * * * sundial run pHsjv_HRzu echo hey
+* * * * * sundial run M_x8imC1xH echo nice
+* * * * * sundial run XK74-ztlt4 echo hello
+* * * * * sundial run dlMnzAOc8x echo hi
 Curent PATH=/usr/local/bin:$PATH
-#fake path
 
-
-
-#* * * * * sundial run bvc8NqQwZ0 echo hey
-
-* * * * * sundial run pHsjv_HRzu echo hey
-New data []
+* * * * * sundial run M_x8imC1xH echo nice
+* * * * * sundial run XK74-ztlt4 echo hello
+* * * * * sundial run dlMnzAOc8x echo hi
+New data [
+  {
+    id: 25,
+    endpoint_key: 'M_x8imC1xH',
+    name: 'hello world',
+    schedule: '* * * * *',
+    command: 'echo nice',
+    active: true,
+    failing: false,
+    created_at: '2023-11-02T03:01:41.913Z',
+    tolerable_runtime: 22,
+    grace_period: 5,
+    type: 'dual'
+  },
+  {
+    id: 29,
+    endpoint_key: 'XK74-ztlt4',
+    name: null,
+    schedule: '* * * * *',
+    command: 'echo hello',
+    active: true,
+    failing: false,
+    created_at: '2023-11-03T03:21:39.204Z',
+    tolerable_runtime: 25,
+    grace_period: 5,
+    type: 'dual'
+  },
+  {
+    id: 30,
+    endpoint_key: 'dlMnzAOc8x',
+    name: null,
+    schedule: '* * * * *',
+    command: 'echo hi',
+    active: true,
+    failing: true,
+    created_at: '2023-11-03T03:21:43.618Z',
+    tolerable_runtime: 25,
+    grace_period: 5,
+    type: 'dual'
+  }
+]
 [
   'PATH=/usr/local/bin:$PATH',
-  '#fake path',
   '',
-  '',
-  '',
-  '#* * * * * sundial run bvc8NqQwZ0 echo hey',
-  ''
+  '* * * * * sundial run M_x8imC1xH echo nice',
+  '* * * * * sundial run XK74-ztlt4 echo hello',
+  '* * * * * sundial run dlMnzAOc8x echo hi'
 ]
 Final crontab text before save: PATH=/usr/local/bin:$PATH
-#fake path
 
-
-
-#* * * * * sundial run bvc8NqQwZ0 echo hey
-
+* * * * * sundial run M_x8imC1xH echo nice
+* * * * * sundial run XK74-ztlt4 echo hello
+* * * * * sundial run dlMnzAOc8x echo hi
 In save crontab, text: PATH=/usr/local/bin:$PATH
-#fake path
 
-
-
-#* * * * * sundial run bvc8NqQwZ0 echo hey
-
+* * * * * sundial run M_x8imC1xH echo nice
+* * * * * sundial run XK74-ztlt4 echo hello
+* * * * * sundial run dlMnzAOc8x echo hi
 Crontab updated.
