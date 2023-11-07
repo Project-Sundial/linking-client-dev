@@ -24,17 +24,21 @@ export const getHeaders = () => {
   };
 };
 
-export const getBaseUrl = () => {
-  let baseUrl='';
+export const getIpAddress = () => {
+  let ipAddress='';
 
   try {
     const configFileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
     const config = JSON.parse(configFileContents);
-    baseUrl = config.IP_ADDRESS + ':' + BACKEND_PORT;
+    ipAddress = config.IP_ADDRESS
   } catch(e) {
     error(`Error:`, e);
-    error(`Please register your API key with sundial register before using the CLI`);
+    error(`Please register your backend private IP address with sundial register before using the CLI`);
   }
 
-  return baseUrl;
+  return ipAddress;
+};
+
+export const getBaseUrl = () => {
+  return getIpAddress() + ':' + BACKEND_PORT;
 };

@@ -1,8 +1,9 @@
 import { exec } from 'child_process';
 import { LISTENER_PORT } from '../constants/ports';
+import { getIpAddress } from './config';
 
 export const allowUFWRule = () => {
-  const command = `sudo ufw allow from 10.108.0.0/20 to any port ${LISTENER_PORT}`;
+  const command = `sudo ufw allow from ${getIpAddress()} to any port ${LISTENER_PORT}`;
   
   exec(command, (error, stdout, stderr) => {
     if (error) {
