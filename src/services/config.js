@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { CONFIG_PATH } from '../constants/paths.js';
+import { BACKEND_PORT } from "../constants/ports.js";
 import { error } from 'console';
+
 
 export const getHeaders = () => {
   let apiKey = '';
@@ -28,7 +30,7 @@ export const getBaseUrl = () => {
   try {
     const configFileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
     const config = JSON.parse(configFileContents);
-    baseUrl = config.BASE_URL;
+    baseUrl = config.IP_ADDRESS + ':' + BACKEND_PORT;
   } catch(e) {
     error(`Error:`, e);
     error(`Please register your API key with sundial register before using the CLI`);

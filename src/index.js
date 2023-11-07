@@ -40,4 +40,12 @@ program.command('listen')
 .description('Listens for updates from application backend')
 .action(sundial.listen);
 
+program.command('reset')
+.description('Removes the system process entirely')
+.action(sundial.reset);
+
+program.command('test')
+.description('test')
+.action(() => {console.log('testing 123')});
+
 program.parse(process.argv);

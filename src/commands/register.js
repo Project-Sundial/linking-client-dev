@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { replaceSystemdService } from '../services/replaceSystemdService.js';
+import { allowUFWRule } from '../services/allowUFWRule.js';
 import { EXECUTABLE_PATH } from '../constants/paths.js';
 
 export const register = async (args, options) => {
@@ -16,11 +17,9 @@ export const register = async (args, options) => {
     return;
   }
 
-  replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
-
   const data = {
     API_KEY: options.apiKey,
-    BASE_URL: options.ipAddress
+    IP_ADDRESS: options.ipAddress
   };
 
   const directoryPath = '/etc/sundial';
@@ -38,4 +37,7 @@ export const register = async (args, options) => {
   } catch (err) {
     console.error('Error writing data to the file:', err);
   }
+
+  replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
+  allowUFWRule();
 };

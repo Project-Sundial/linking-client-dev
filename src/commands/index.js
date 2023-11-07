@@ -3,6 +3,7 @@ import { discover } from './discover.js';
 import { update } from './update.js';
 import { register } from './register.js';
 import { listen } from './listen.js';
+import { reset } from './reset.js';
 
 export default {
   run,
@@ -10,4 +11,5 @@ export default {
   update,
   register,
   listen,
+  reset,
 };

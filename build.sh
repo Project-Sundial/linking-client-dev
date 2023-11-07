@@ -23,7 +23,7 @@ sudo mv ./index ../cli_executables/linux/sundial
 
 # Grant read permissions
 # chmod +x /usr/local/bin/sundial
-chmod +x ../cli_executables/linux/sundial
+# chmod +x ../cli_executables/linux/sundial
 
 # Cleanup
 rm -r $ROOT_PATH/lib
