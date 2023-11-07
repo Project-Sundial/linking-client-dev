@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { replaceSystemdService } from '../services/replaceSystemdService.js';
+import { EXECUTABLE_PATH } from '../constants/paths.js';
 
 export const register = async (args, options) => {
   if (Object.keys(options).length < 2) {
@@ -13,6 +15,8 @@ export const register = async (args, options) => {
       `sudo sundial register -i ${options.ipAddress} -a ${options.apiKey}`);
     return;
   }
+
+  replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
 
   const data = {
     API_KEY: options.apiKey,

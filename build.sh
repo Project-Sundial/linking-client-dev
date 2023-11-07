@@ -4,8 +4,8 @@
 
 ROOT_PATH="/Users/davidperez/Documents/Capstone/Sundial/cli"
 NODE="node18"
-PLATFORM="macos"
-ARCH="arm64"
+PLATFORM="linux"
+ARCH="x64"
 UPDATED_CRONTAB="/tmp/updated_crontab"
 # BUILD SCRIPT
 
@@ -16,10 +16,14 @@ pkg --target $NODE-$PLATFORM-$ARCH ./lib/index.js
 
 # Transfer executable to bin
 # sudo rm /usr/local/bin/sundial
-sudo mv ./index /usr/local/bin/sundial
+# sudo mv ./index /usr/local/bin/sundial
+
+sudo rm ../cli_executables/linux/sundial
+sudo mv ./index ../cli_executables/linux/sundial
 
 # Grant read permissions
-chmod +x /usr/local/bin/sundial
+# chmod +x /usr/local/bin/sundial
+chmod +x ../cli_executables/linux/sundial
 
 # Cleanup
 rm -r $ROOT_PATH/lib
