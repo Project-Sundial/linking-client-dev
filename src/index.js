@@ -7,10 +7,16 @@ program
   .version('1.0.0')
   .description('My Command Line Tool');
 
-program.command('register')
+program
+  .command('register')
   .description('Registers sundial application with the CLI!')
-  .action(() => {
-    sundial.register(program.args);
+  .option('-i, --ip <ip>', 'Specify the IP address')
+  .option('-a, --api <api>', 'Specify the API key')
+  .action((cmd) => {
+    const ipAddress = cmd.ip;
+    const apiKey = cmd.api;
+    
+    sundial.register(program.args, { ipAddress, apiKey });
   });
 
 program.command('run')

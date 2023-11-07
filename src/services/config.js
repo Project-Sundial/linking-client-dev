@@ -20,4 +20,19 @@ export const getHeaders = () => {
       'Authorization': `Bearer ${btoa(apiKey)}`,
     },
   };
-}
+};
+
+export const getBaseUrl = () => {
+  let baseUrl='';
+
+  try {
+    const configFileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
+    const config = JSON.parse(configFileContents);
+    baseUrl = config.BASE_URL;
+  } catch(e) {
+    error(`Error:`, e);
+    error(`Please register your API key with sundial register before using the CLI`);
+  }
+
+  return baseUrl;
+};

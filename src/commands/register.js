@@ -1,20 +1,22 @@
 import fs from 'fs';
 import path from 'path';
 
-export const register = async (args) => {
-  if (args.length < 2) {
-    console.error('No arguments provided.');
+export const register = async (args, options) => {
+  if (Object.keys(options).length < 2) {
+    console.error('Error: Please provide both --ip and --api arguments');
     return;
   }
 
   if (process.getuid() !== 0) {
     console.error('This command requires administrative (sudo) privileges.\n\n'+
-      `Please enter the following command:\n\nsudo sundial register ${args[1]}`);
+      `Please enter the following command:\n` +
+      `sudo sundial register -i ${options.ipAddress} -a ${options.apiKey}`);
     return;
   }
 
   const data = {
-    API_KEY: args[1],
+    API_KEY: options.apiKey,
+    BASE_URL: options.ipAddress
   };
 
   const directoryPath = '/etc/sundial';
@@ -24,7 +26,6 @@ export const register = async (args) => {
 
   try {
     if (!fs.existsSync(directoryPath)) {
-      // Create the directory if it doesn't exist
       fs.mkdirSync(directoryPath, { recursive: true });
     }
 
