@@ -7,7 +7,9 @@ import {
 import {
   getHeaders,
   getBaseUrl,
+  getCLIIP
 } from "./config.js";
+
 
 export const pingMonitor = async (ping, endpointKey, event) => {
   try {
@@ -26,6 +28,19 @@ export const createMonitor = async (newMonitor) => {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
     const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor, HEADERS);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const registerMachine = async () => {
+  try {
+    const HEADERS = getHeaders();
+    const BASE_URL = getBaseUrl();
+    const IP = getCLIIP() || {};
+    console.log(IP);
+    const { data } = await axios.post(BASE_URL + CREATE_MONITOR, IP, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
