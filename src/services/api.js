@@ -40,7 +40,7 @@ export const registerMachine = async () => {
     const BASE_URL = getBaseUrl();
     const IP = getCLIIP() || {};
     console.log(IP);
-    const { data } = await axios.post(BASE_URL + CREATE_MACHINE, IP, HEADERS);
+    const { data } = await axios.put(BASE_URL + CREATE_MACHINE, IP, HEADERS);
     return data;
   } catch (e) {
     console.error(e);

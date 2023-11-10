@@ -25,7 +25,7 @@ export const listen = () => {
     //   }
     //   console.log(`Output: ${stdout}`);
     // });
-    res.status(200).send(`This is a test. CLI listener is running!\nCounter is at: ${counter}`);
+    res.status(200).send(`This is a test. CLI listener is running!\nCounter is at: ${counter}\nIP: ${req.ip}\n\n`);
   });
 
   app.post('/trigger-sync', (req, res) => {

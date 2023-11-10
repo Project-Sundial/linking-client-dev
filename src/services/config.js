@@ -45,7 +45,7 @@ export const getBaseUrl = () => {
 
 export function getCLIIP() {
   const interfaces = os.networkInterfaces();
-  let IP = null;
+  let ip = null;
 
   for (const interfaceName in interfaces) {
     if (interfaceName.startsWith('eth') || interfaceName.startsWith('ens')) {
@@ -53,11 +53,11 @@ export function getCLIIP() {
       const iface = interfaces[interfaceName].find(iface => !iface.internal && iface.family === 'IPv4');
 
       if (iface) {
-        IP = iface.address;
+        ip = iface.address;
         break;
       }
     }
   }
 
-  return { IP };
+  return { ip };
 }

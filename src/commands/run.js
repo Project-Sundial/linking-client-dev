@@ -26,6 +26,7 @@ export const run = async (args) => {
 
   // Check for errors when spinning up child process
   childProcess.on('error', (error) => {
+    const time = new Date();
     console.error('Error:', error);
   });
 
