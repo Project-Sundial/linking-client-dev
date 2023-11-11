@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 const app = express();
 const port = 56789;
 
-const logFile = '/Users/Sofia/Programming/Capstone/capstone-project/cli/sundial_logs.txt'
+const logFile = '/Users/davidperez/Documents/Capstone/Sundial/cli/cron.log';
 
 app.post('/trigger-sync', (req, res) => {
   const executablePath = `/usr/local/bin/sundial update > ${logFile} 2>&1`;
