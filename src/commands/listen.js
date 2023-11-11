@@ -8,6 +8,8 @@ export const listen = () => {
   let counter = 0;
 
   app.post('/trigger-sync', (req, res) => {
+    const executablePath = `${EXECUTABLE_PATH} update`;
+
     counter += 1;
     exec(executablePath, (error, stdout, stderr) => {
       if (error) {
