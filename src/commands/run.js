@@ -15,7 +15,7 @@ export const run = async (args) => {
   const endpointKey = args[1];
 
   // Ping monitor
-  pingMonitor(startPing, endpointKey, event);
+  await pingMonitor(startPing, endpointKey, event);
 
   let logContent = '';
 
@@ -29,16 +29,16 @@ export const run = async (args) => {
   });
 
   // Check for errors when spinning up child process, send log and end ping
-  // childProcess.on('error', async (error) => {
+  childProcess.on('error', async (error) => {
 
-  //   const time = new Date();
-  //   const endPing = { time, runToken };
-  //   const event = 'failing';
-  //   await pingMonitor(endPing, endpointKey, event);
+    const time = new Date();
+    const endPing = { time, runToken };
+    const event = 'failing';
+    await pingMonitor(endPing, endpointKey, event);
 
-  //   logContent += error.message;
-  //   addErrorLog({runToken, logContent});
-  // });
+    logContent += error.message;
+    addErrorLog({runToken, logContent});
+  });
 
   // End ping upon exit from process
   childProcess.on('exit', async (code) => {
