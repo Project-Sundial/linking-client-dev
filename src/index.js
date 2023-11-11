@@ -30,4 +30,8 @@ program.command('update')
 .description('Get updates to crontab!')
 .action(sundial.update);
 
+program.command('listen')
+.description('Listens for updates from application backend')
+.action(sundial.listen);
+
 program.parse(process.argv);
