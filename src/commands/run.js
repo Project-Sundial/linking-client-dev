@@ -1,9 +1,8 @@
 import { spawn } from 'child_process';
-import { generateRunToken } from '../utils/generateRunToken.js'
-import { pingMonitor } from '../services/api.js';
+import { generateRunToken } from '../utils/generateRunToken.js';
+import { pingMonitor, addErrorLog } from '../services/api.js';
 
 export const run = async (args) => {
-
   // Store start ping info
   const time = new Date();
   const runToken = generateRunToken();
@@ -18,33 +17,41 @@ export const run = async (args) => {
   // Ping monitor
   pingMonitor(startPing, endpointKey, event);
 
-  // Execute the command using the shell, inherit the standard I/O streams
+  let logContent = '';
+
   const childProcess = spawn(commandString, {
     shell: true,
-    stdio: 'inherit',
+    stdio: ['inherit', 'pipe', 'pipe'],
   });
 
-  // Check for errors when spinning up child process
-  childProcess.on('error', (error) => {
-    console.error('Error:', error);
+  childProcess.stderr.on('data', (data) => {
+    logContent += data.toString();
+  });
+
+  // Check for errors when spinning up child process, send log and end ping
+  childProcess.on('error', async (error) => {
+
+    const time = new Date();
+    const endPing = { time, runToken };
+    const event = 'failing';
+    await pingMonitor(endPing, endpointKey, event);
+
+    logContent += error.message;
+    addErrorLog({runToken, logContent});
   });
 
   // End ping upon exit from process
-  await childProcess.on('exit', async (code) => {
-
+  childProcess.on('exit', async (code) => {
+  
     // Store additional end ping info
     const time = new Date();
     const endPing = { time, runToken };
 
-    let event;
-    if (code === 0) {
-      event = 'ending';
-    } else {
-      console.error(`Command failed with code ${code}`);
-      event = 'failing';
+    const event = (code === 0) ? 'ending' : 'failing';
+    await pingMonitor(endPing, endpointKey, event);
+   
+    if (event === 'failing') {
+      addErrorLog({runToken, logContent});
     }
-
-    pingMonitor(endPing, endpointKey, event);
-
   });
 };
