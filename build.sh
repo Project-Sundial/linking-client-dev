@@ -15,7 +15,7 @@ npm run convert
 pkg --target $NODE-$PLATFORM-$ARCH ./lib/index.js
 
 # Transfer executable to bin
-# sudo rm /usr/local/bin/sundial
+sudo rm /usr/local/bin/sundial
 sudo mv ./index /usr/local/bin/sundial
 
 # Grant read permissions
