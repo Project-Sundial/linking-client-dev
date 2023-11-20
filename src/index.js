@@ -12,12 +12,7 @@ program
   .description('Registers sundial application with the CLI!')
   .option('-i, --ip <ip>', 'Specify the IP address')
   .option('-a, --api <api>', 'Specify the API key')
-  .action((cmd) => {
-    const ipAddress = cmd.ip;
-    const apiKey = cmd.api;
-    
-    sundial.register(program.args, { ipAddress, apiKey });
-  });
+  .action(sundial.register);
 
 program.command('run')
   .description('Pings monitor and runs cron job')
