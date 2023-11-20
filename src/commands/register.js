@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { replaceSystemdService } from '../services/replaceSystemdService.js';
-import { allowUFWRule } from '../services/allowUFWRule.js';
 import { EXECUTABLE_PATH } from '../constants/paths.js';
 import { registerMachine } from '../services/api.js';
 import readline from 'readline';
@@ -100,5 +99,4 @@ export const register = async (args, options) => {
 
   await registerMachine();
   replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
-  allowUFWRule();
 };
