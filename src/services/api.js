@@ -17,7 +17,8 @@ export const pingMonitor = async (ping, endpointKey, event) => {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
     const URL = BASE_URL + PING_MONITOR + endpointKey + '?event=' + event
-    const { data } = await axios.post(URL, ping, HEADERS);
+    const remoteIP = getRemoteIpAddress() || {};
+    const { data } = await axios.post(URL, { ...ping, remoteIP }, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
@@ -28,7 +29,8 @@ export const createMonitor = async (newMonitor) => {
   try {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
-    const { data } = await axios.post(BASE_URL + CREATE_MONITOR, newMonitor, HEADERS);
+    const remoteIP = getRemoteIpAddress() || {};
+    const { data } = await axios.post(BASE_URL + CREATE_MONITOR, { ...newMonitor, remoteIP }, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
@@ -39,9 +41,9 @@ export const registerMachine = async () => {
   try {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
-    const REMOTE_IP = getRemoteIpAddress() || {};
-    console.log(REMOTE_IP);
-    const { data } = await axios.put(BASE_URL + CREATE_MACHINE, REMOTE_IP, HEADERS);
+    const remoteIP = getRemoteIpAddress() || {};
+    console.log(remoteIP);
+    const { data } = await axios.put(BASE_URL + CREATE_MACHINE, { remoteIP }, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
@@ -52,12 +54,21 @@ export const getUpdates = async () => {
   try {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
-    const { data } = await axios.get(BASE_URL + GET_MONITORS, HEADERS);
+    const remoteIP = getRemoteIpAddress() || {};
+    const params = { remoteIP };
+    const config = {
+      headers: HEADERS,
+      params: params,
+    };
+
+    const { data } = await axios.get(BASE_URL + GET_MONITORS, config);
     return data;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Error fetching updates:', error);
+    throw error;
   }
 };
+
 
 // export const successfulSync = async (updates) => {
 //   try {
