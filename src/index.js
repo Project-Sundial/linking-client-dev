@@ -10,9 +10,14 @@ program
 program
   .command('register')
   .description('Registers sundial application with the CLI!')
-  .option('-i, --ip <ip>', 'Specify the IP address')
+  .option('-i, --ip <ip>', 'Specify the private IP address of the monitor system')
   .option('-a, --api <api>', 'Specify the API key')
-  .action(sundial.register);
+  .action((cmd) => {
+    const hubIpAddress = cmd.ip;
+    const apiKey = cmd.api;
+    
+    sundial.register({ hubIpAddress, apiKey });
+  });
 
 program.command('run')
   .description('Pings monitor and runs cron job')
