@@ -29,9 +29,9 @@ export const listen = () => {
   });
 
   app.post('/trigger-sync', (req, res) => {
-    const executablePath = `${EXECUTABLE_PATH} update > ${logFile} 2>&1`;
+    const executablePath = `${EXECUTABLE_PATH} update`;
   
-    console.log('hi');
+    // console.log('hi');
     exec(executablePath, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
