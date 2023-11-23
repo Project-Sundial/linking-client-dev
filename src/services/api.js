@@ -2,12 +2,13 @@ import axios from "axios";
 import {
   CREATE_MONITOR,
   PING_MONITOR,
-  GET_MONITORS
+  GET_MONITORS,
+  CREATE_MACHINE
 } from "../constants/routes.js";
 import {
   getHeaders,
   getBaseUrl,
-  getCLIIP
+  getRemoteIpAddress
 } from "./config.js";
 
 
@@ -38,9 +39,9 @@ export const registerMachine = async () => {
   try {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
-    const IP = getCLIIP() || {};
-    console.log(IP);
-    const { data } = await axios.put(BASE_URL + CREATE_MACHINE, IP, HEADERS);
+    const REMOTE_IP = getRemoteIpAddress() || {};
+    console.log(REMOTE_IP);
+    const { data } = await axios.put(BASE_URL + CREATE_MACHINE, REMOTE_IP, HEADERS);
     return data;
   } catch (e) {
     console.error(e);

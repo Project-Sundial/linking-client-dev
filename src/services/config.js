@@ -24,40 +24,55 @@ export const getHeaders = () => {
   };
 };
 
-export const getApplicationIpAddress = () => {
-  let ipAddress='';
+export const getHubIpAddress = () => {
+  let hubIPAddress='';
 
   try {
     const configFileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
     const config = JSON.parse(configFileContents);
-    ipAddress = config.IP_ADDRESS
+    hubIPAddress = config.HUB_IP_ADDRESS
   } catch(e) {
     error(`Error:`, e);
-    error(`Please register your backends private IP address with sundial register before using the CLI`);
+    error(`Please register the monitor systems private IP address with sundial register before using the CLI`);
   }
 
-  return ipAddress;
+  return hubIPAddress;
+};
+
+export const getRemoteIpAddress = () => {
+  let remoteIpAddress='';
+
+  try {
+    const configFileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
+    const config = JSON.parse(configFileContents);
+    remoteIpAddress = config.REMOTE_IP_ADDRESS;
+  } catch(e) {
+    error(`Error:`, e);
+    error(`Please register the monitor systems private IP address with sundial register before using the CLI`);
+  }
+
+  return remoteIpAddress;
 };
 
 export const getBaseUrl = () => {
-  return getApplicationIpAddress() + ':' + BACKEND_PORT;
+  return getHubIpAddress() + ':' + BACKEND_PORT;
 };
 
-export function getCLIIP() {
-  const interfaces = os.networkInterfaces();
-  let ip = null;
+// export function getReIP() {
+//   const interfaces = os.networkInterfaces();
+//   let ip = null;
 
-  for (const interfaceName in interfaces) {
-    if (interfaceName.startsWith('eth') || interfaceName.startsWith('ens')) {
-      // Check if the interface is not a loopback and is IPv4
-      const iface = interfaces[interfaceName].find(iface => !iface.internal && iface.family === 'IPv4');
+//   for (const interfaceName in interfaces) {
+//     if (interfaceName.startsWith('eth') || interfaceName.startsWith('ens')) {
+//       // Check if the interface is not a loopback and is IPv4
+//       const iface = interfaces[interfaceName].find(iface => !iface.internal && iface.family === 'IPv4');
 
-      if (iface) {
-        ip = iface.address;
-        break;
-      }
-    }
-  }
+//       if (iface) {
+//         ip = iface.address;
+//         break;
+//       }
+//     }
+//   }
 
-  return { ip };
-}
+//   return { ip };
+// }

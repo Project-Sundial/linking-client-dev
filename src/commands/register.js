@@ -52,6 +52,6 @@ export const register = async (options) => {
     console.error('Error writing data to the file:', err);
   }
 
-  // await registerMachine();
+  await registerMachine();
   // replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
 };
