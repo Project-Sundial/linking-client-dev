@@ -3,7 +3,8 @@ import {
   CREATE_MONITOR,
   PING_MONITOR,
   GET_MONITORS,
-  CREATE_MACHINE
+  CREATE_MACHINE,
+  ADD_ERROR_LOG
 } from "../constants/routes.js";
 import {
   getHeaders,
@@ -19,6 +20,17 @@ export const pingMonitor = async (ping, endpointKey, event) => {
     const URL = BASE_URL + PING_MONITOR + endpointKey + '?event=' + event
     const remoteIP = getRemoteIpAddress() || {};
     const { data } = await axios.post(URL, { ...ping, remoteIP }, HEADERS);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const addErrorLog = async (entry) => {
+  try {
+    console.log(entry);
+    const HEADERS = getHeaders();
+    const { data } = await axios.put(BASE_URL + ADD_ERROR_LOG, entry, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
