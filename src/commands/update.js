@@ -41,14 +41,15 @@ const generateCrontab = async ( newData ) => {
 
   const lines = currentCrontab.split('\n');
   for (const line of lines) {
-    if (!isJob(line)) {
+    if (!isJob(line) && line.trim().length > 0) {
       newCrontab.push(line);
     }
   };
 
+  newCrontab.push('\n');
   newData.forEach(job => newCrontab.push(generateCronString(job)));
   console.log(newCrontab)
-  return newCrontab.join('\n');
+  return newCrontab.join('\n')+'\n';
 }
 
 const saveCrontab = ( crontabText ) => {
