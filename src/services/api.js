@@ -55,10 +55,10 @@ export const getUpdates = async () => {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
     const remoteIP = getRemoteIpAddress() || {};
-    const params = { remoteIP };
+    const IPdata = { remoteIP };
     const config = {
-      headers: HEADERS,
-      params: params,
+      ...HEADERS,
+      data: IPdata,
     };
 
     const { data } = await axios.get(BASE_URL + GET_MONITORS, config);
