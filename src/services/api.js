@@ -54,7 +54,6 @@ export const registerMachine = async () => {
     const HEADERS = getHeaders();
     const BASE_URL = getBaseUrl();
     const remoteIP = getRemoteIpAddress() || {};
-    console.log(remoteIP);
     const { data } = await axios.put(BASE_URL + CREATE_MACHINE, { remoteIP }, HEADERS);
     return data;
   } catch (e) {

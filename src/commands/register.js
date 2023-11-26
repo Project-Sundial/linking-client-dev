@@ -6,35 +6,44 @@ import { registerMachine } from '../services/api.js';
 import readline from 'readline';
 
 export const register = async (options) => {
-  if (!Object.values(options).every((v) => v)) {
-    console.error('Error: Please provide both --ip and --api arguments');
+
+  if (!options.apiKey) {
+    console.error('Error: Please provide --apiKey argument');
     return;
   }
 
   if (process.getuid() !== 0) {
     console.error('This command requires administrative (sudo) privileges.\n\n'+
       `Please enter the following command:\n` +
-      `sudo sundial register -i ${options.hubIpAddress} -a ${options.apiKey}`);
+      `sudo sundial register -a ${options.apiKey}`);
     return;
   }
 
   const data = {
     API_KEY: options.apiKey,
-    HUB_IP_ADDRESS: options.hubIpAddress
   };
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  const question = `\nEnter remote host (current host, where crontab is stored) private IP address: `;
-
-  data.REMOTE_IP_ADDRESS = await new Promise((resolve) => {
-    rl.question(question, resolve);
-  });
-
-  rl.close();
+  if (options.local) {
+    data.REMOTE_IP_ADDRESS = 'http://host.docker.internal';
+    data.HUB_IP_ADDRESS = 'http://localhost';
+  } else {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+  
+    const question1 = `\nEnter remote host (current host, where crontab is stored) private IP address: `;
+    const question2 = `\nEnter monitoring system host (hub host) private IP address: `;
+  
+    data.REMOTE_IP_ADDRESS = await new Promise((resolve) => {
+      rl.question(question1, resolve);
+    });
+    data.HUB_IP_ADDRESS = await new Promise((resolve) => {
+      rl.question(question2, resolve);
+    });
+  
+    rl.close();
+  }
 
   const directoryPath = '/etc/sundial';
   const filePath = path.join(directoryPath, 'config.json');

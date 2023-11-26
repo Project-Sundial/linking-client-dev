@@ -10,13 +10,12 @@ program
 program
   .command('register')
   .description('Registers sundial application with the CLI!')
-  .option('-i, --ip <ip>', 'Specify the private IP address of the monitor system')
-  .option('-a, --api <api>', 'Specify the API key')
+  .option('-a, --apiKey <apiKey>', 'Specify the API key')
+  .option('-l, --local', 'Specify local flag')
   .action((cmd) => {
-    const hubIpAddress = cmd.ip;
-    const apiKey = cmd.api;
-    
-    sundial.register({ hubIpAddress, apiKey });
+    const apiKey = cmd.apiKey;   
+    const local = cmd.local; // Check if the '--local' flag exists
+    sundial.register({ apiKey, local });
   });
 
 program.command('run')
