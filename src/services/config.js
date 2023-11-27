@@ -3,6 +3,7 @@ import { CONFIG_PATH } from '../constants/paths.js';
 import { BACKEND_PORT } from "../constants/ports.js";
 import { error } from 'console';
 import os from 'os';
+import { PROTOCOL } from '../constants/protocols.js';
 
 export const getHeaders = () => {
   let apiKey = '';
@@ -55,7 +56,7 @@ export const getRemoteIpAddress = () => {
 };
 
 export const getBaseUrl = () => {
-  return getHubIpAddress() + ':' + BACKEND_PORT;
+  return PROTOCOL + getHubIpAddress() + ':' + BACKEND_PORT;
 };
 
 // export function getReIP() {

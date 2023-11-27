@@ -24,8 +24,8 @@ export const register = async (options) => {
   };
 
   if (options.local) {
-    data.REMOTE_IP_ADDRESS = 'http://host.docker.internal';
-    data.HUB_IP_ADDRESS = 'http://localhost';
+    data.REMOTE_IP_ADDRESS = 'host.docker.internal';
+    data.HUB_IP_ADDRESS = 'localhost';
   } else {
     const rl = readline.createInterface({
       input: process.stdin,
