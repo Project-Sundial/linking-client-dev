@@ -6,32 +6,11 @@ import { LISTENER_PORT } from "../constants/ports.js";
 export const listen = () => {
   const app = express();
   let counter = 0;
-  
-  const logFile = '~/sundial_logs.txt';
-  
-  app.get('/', (req, res) => {
-    const executablePath = `${EXECUTABLE_PATH} update > ${logFile} 2>&1`;
-  
-    counter += 1;
-    // console.log('hi');
-    // exec(executablePath, (error, stdout, stderr) => {
-    //   if (error) {
-    //     console.error(`Error: ${error.message}`);
-    //     return;
-    //   }
-    //   if (stderr) {
-    //     console.error(`stderr: ${stderr}`);
-    //     return;
-    //   }
-    //   console.log(`Output: ${stdout}`);
-    // });
-    res.status(200).send(`This is a test. CLI listener is running!\nCounter is at: ${counter}\nIP: ${req.ip}\n\n`);
-  });
+
 
   app.post('/trigger-sync', (req, res) => {
     const executablePath = `${EXECUTABLE_PATH} update`;
   
-    // console.log('hi');
     exec(executablePath, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
