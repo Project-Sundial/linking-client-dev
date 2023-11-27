@@ -47,17 +47,17 @@ export const listen = () => {
     // console.log(process.argv[1]);
     const args = [process.argv[1], 'update'];
 
-    const process = spawn(executablePath, args);
+    const process1 = spawn(executablePath, args);
 
-    process.stdout.on('data', (data) => {
+    process1.stdout.on('data', (data) => {
       console.log(`Output: ${data}`);
     });
 
-    process.stderr.on('data', (data) => {
+    process1.stderr.on('data', (data) => {
       console.error(`stderr: ${data}`);
     });
 
-    process.on('close', (code) => {
+    process1.on('close', (code) => {
       if (code !== 0) {
         console.error(`Error: Process exited with code ${code}`);
       }
