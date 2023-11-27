@@ -1,8 +1,10 @@
 import { getUpdates } from '../services/api.js';
 import { parse } from '../utils/cronjob.js';
+import { addPath } from '../utils/path.js';
 import { generateCronString } from '../utils/cronjob.js';
 import { exec, spawn } from 'child_process'
 import cron from 'node-cron';
+
 
 const fetchCrontab = async () => {
   const retrieveCurrentCrontab = async () => {
@@ -35,7 +37,8 @@ const isJob = ( line ) => {
 
 const generateCrontab = async ( newData ) => {
   const currentCrontab = await fetchCrontab();
-  const newCrontab = [];
+  const path = addPath('');
+  const newCrontab = path ? [] : [path];
   console.log("Current", currentCrontab)
   console.log("New data", newData)
 

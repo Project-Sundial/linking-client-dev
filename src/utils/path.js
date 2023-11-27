@@ -1,8 +1,10 @@
+import { EXECUTABLE_PATH } from "../constants/paths";
+
 export const addPath = (crontabText) => {
-  if (crontabText.startsWith('PATH=/usr/local/bin:')) {
+  if (crontabText.startsWith(`PATH=${EXECUTABLE_PATH}:`)) {
     return crontabText
   } 
-  return 'PATH=/usr/local/bin:$PATH\n' + crontabText;
+  return `PATH=${EXECUTABLE_PATH}:$PATH\n` + crontabText;
 }
 
 export const convertPath = (line) => {
