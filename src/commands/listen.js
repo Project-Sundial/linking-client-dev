@@ -32,7 +32,7 @@
 // }
 
 import express from 'express';
-import { spawn } from 'child_process';
+import { process, spawn } from 'child_process';
 import { EXECUTABLE_PATH } from '../constants/paths.js';
 import { LISTENER_PORT } from '../constants/ports.js';
 
@@ -42,6 +42,7 @@ export const listen = () => {
 
   app.post('/trigger-sync', (req, res) => {
     const executablePath = EXECUTABLE_PATH;
+    console.log(process);
     console.log(process.execPath);
     console.log(process.argv[1]);
     const args = [process.argv[1], 'update'];
