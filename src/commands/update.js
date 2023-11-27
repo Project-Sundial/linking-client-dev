@@ -36,7 +36,7 @@ const isJob = ( line ) => {
 const generateCrontab = async ( newData ) => {
   const currentCrontab = await fetchCrontab();
   const newCrontab = [];
-  console.log("Curent", currentCrontab)
+  console.log("Current", currentCrontab)
   console.log("New data", newData)
 
   const lines = currentCrontab.split('\n');
