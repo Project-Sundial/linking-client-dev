@@ -73,6 +73,7 @@ export const listen = () => {
     });
 
     process1.on('close', (code) => {
+      fetchCrontab();
       if (code !== 0) {
         console.error(`Error: Process exited with code ${code}`);
       }
@@ -110,6 +111,7 @@ export const listen = () => {
         console.error('An error occurred:', error);
       }
     }
+    fetchCrontab();
 
     console.log('Received trigger request. Initiating sundial update request.');
     res.status(200).send('CLI update call initiated.');
