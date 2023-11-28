@@ -8,12 +8,6 @@ import { allowUFWRule } from '../services/allowUFWRule.js';
 import os from 'os';
 
 export const register = async (options) => {
-  // const sudoUser = process.env.SUDO_USER;
-  // console.log(sudoUser); // This should log the username used in the sudo command
-
-  // const username = os.userInfo().username;
-  // console.log(`original ${username}`); // This will log the username of the current user
-
   if (!options.apiKey) {
     console.error('Error: Please provide --apiKey argument');
     return;
@@ -72,5 +66,7 @@ export const register = async (options) => {
     allowUFWRule();
   }
   await registerMachine();
-  replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
+  if (options.daemonizeServer) {
+    replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
+  }
 };
