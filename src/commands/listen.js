@@ -73,40 +73,43 @@ export const listen = () => {
     });
 
     process1.on('close', (code) => {
-      const fetchCrontab = async () => {
-        const retrieveCurrentCrontab = async () => {
-          return new Promise((resolve, reject) => {
-            exec('crontab -l', (error, stdout, stderr) => {
-              if (error || stderr) {
-                console.error(`Error listing crontab: ${error} ${stderr}`);
-                reject(error);
-                return;
-              }
-        
-              resolve(stdout);
-            });
-          });
-        };
-      
-        try {
-          const currentCrontab = await retrieveCurrentCrontab();
-          console.log('Current crontab:', currentCrontab );
-          return currentCrontab;
-        } catch (error) {
-          console.error('An error occurred:', error);
-        }
-      }
-      let logMessage = fetchCrontab()
-
-      fs.appendFile(logFilePath, logMessage, (err) => {
-        if (err) {
-          console.error('Error 2: writing to log file:', err);
-        }
-      });
       if (code !== 0) {
         console.error(`Error: Process exited with code ${code}`);
       }
     });
+    const fetchCrontab = async () => {
+      const retrieveCurrentCrontab = async () => {
+        return new Promise((resolve, reject) => {
+          exec('crontab -l', (error, stdout, stderr) => {
+            fs.appendFile(logFilePath, stdout, (err) => {
+              if (err) {
+                console.error('Error 2: writing to log file:', err);
+              }
+            });
+            if (error || stderr) {
+              console.error(`Error listing crontab: ${error} ${stderr}`);
+              reject(error);
+              return;
+            }
+            fs.appendFile(logFilePath, stdout, (err) => {
+              if (err) {
+                console.error('Error 2: writing to log file:', err);
+              }
+            });
+      
+            resolve(stdout);
+          });
+        });
+      };
+    
+      try {
+        const currentCrontab = await retrieveCurrentCrontab();
+        console.log('Current crontab:', currentCrontab );
+        return currentCrontab;
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+    }
 
     console.log('Received trigger request. Initiating sundial update request.');
     res.status(200).send('CLI update call initiated.');
