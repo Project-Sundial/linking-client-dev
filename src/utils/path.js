@@ -8,9 +8,9 @@ export const addPath = (crontabText) => {
 }
 
 export const convertPath = (line) => {
-  if (line.startsWith('PATH') && !line.startsWith('PATH=/usr/local/bin:')) {
+  if (line.startsWith('PATH') && !line.startsWith(`PATH=${EXECUTABLE_PATH}`)) {
     const arr = line.split(' ').join('').split('=');
-    arr[1] = '/usr/local/bin:' + arr[1];
+    arr[1] = `${EXECUTABLE_PATH}:` + arr[1];
     return arr.join('=');
   } else {
     return line;
