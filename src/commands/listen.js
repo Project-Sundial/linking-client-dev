@@ -65,6 +65,14 @@ export const listen = () => {
     const process1 = spawn(executablePath, args);
 
     process1.stdout.on('data', async (data) => {
+      console.log(data);
+    });
+
+    process1.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    process1.on('close', (code) => {
       const fetchCrontab = async () => {
         const retrieveCurrentCrontab = async () => {
           return new Promise((resolve, reject) => {
@@ -95,13 +103,6 @@ export const listen = () => {
           console.error('Error 2: writing to log file:', err);
         }
       });
-    });
-
-    process1.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-    });
-
-    process1.on('close', (code) => {
       if (code !== 0) {
         console.error(`Error: Process exited with code ${code}`);
       }
