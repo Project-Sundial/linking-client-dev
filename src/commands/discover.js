@@ -41,6 +41,7 @@ const editCrontab = async (crontabText, full) => {
     await processLine(state, full);
     if (state.done) {
       state.modifiedLines.push(...lines.slice(index));
+      state.modifiedLines.push('\n');
       break;
     }
     index += 1;

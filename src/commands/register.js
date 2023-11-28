@@ -62,5 +62,5 @@ export const register = async (options) => {
   }
 
   await registerMachine();
-  // replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
+  replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
 };
