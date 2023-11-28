@@ -96,7 +96,7 @@ export const listen = () => {
           console.error('An error occurred:', error);
         }
       }
-      let logMessage = await fetchCrontab()
+      let logMessage = fetchCrontab()
 
       fs.appendFile(logFilePath, logMessage, (err) => {
         if (err) {
