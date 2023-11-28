@@ -12,10 +12,12 @@ program
   .description('Registers sundial application with the CLI!')
   .option('-a, --apiKey <apiKey>', 'Specify the API key')
   .option('-l, --local', 'Specify local flag')
+  .option('-u, --ufw', 'Set up UFW for VPC communication')
   .action((cmd) => {
     const apiKey = cmd.apiKey;   
-    const local = cmd.local; // Check if the '--local' flag exists
-    sundial.register({ apiKey, local });
+    const local = cmd.local;
+    const ufw = cmd.ufw; // Check if the '--local' flag exists
+    sundial.register({ apiKey, local, ufw });
   });
 
 program.command('run')

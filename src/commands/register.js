@@ -4,6 +4,7 @@ import { replaceSystemdService } from '../services/replaceSystemdService.js';
 import { EXECUTABLE_PATH } from '../constants/paths.js';
 import { registerMachine } from '../services/api.js';
 import readline from 'readline';
+import { allowUFWRule } from '../services/allowUFWRule.js';
 
 export const register = async (options) => {
 
@@ -61,6 +62,9 @@ export const register = async (options) => {
     console.error('Error writing data to the file:', err);
   }
 
+  if (options.ufw) {
+    allowUFWRule();
+  }
   await registerMachine();
   replaceSystemdService('sundial-listen', `${EXECUTABLE_PATH} listen`);
 };
