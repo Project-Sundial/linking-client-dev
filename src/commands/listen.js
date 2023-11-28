@@ -37,7 +37,7 @@
 
 
 import express from 'express';
-import { spawn } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { EXECUTABLE_PATH } from '../constants/paths.js';
 import { LISTENER_PORT } from '../constants/ports.js';
 import fs from 'fs';
