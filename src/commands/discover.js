@@ -11,17 +11,17 @@ export const discover = (options) => {
       console.error(`Error listing crontab: ${error}`);
       return;
     }
-    if (!options.full) {
+    if (!options.all) {
       console.log('\nCurrent crontab:');
       console.log(stdout);
       console.log('');
     }
-    editCrontab(stdout, options.full);
+    editCrontab(stdout, options.all);
   });
 };
 
 // Edits the crontab interactively
-const editCrontab = async (crontabText, full) => {
+const editCrontab = async (crontabText, all) => {
   crontabText = addPath(crontabText);
   const lines = crontabText.split('\n');
 
@@ -38,7 +38,7 @@ const editCrontab = async (crontabText, full) => {
   let index = 0;
   for (const line of lines) {
     state.line = line;
-    await processLine(state, full);
+    await processLine(state, all);
     if (state.done) {
       state.modifiedLines.push(...lines.slice(index));
       state.modifiedLines.push('\n');
@@ -51,7 +51,7 @@ const editCrontab = async (crontabText, full) => {
   saveCrontab(state.modifiedLines.join('\n'));
 };
 
-const processLine = async (state, full) => {
+const processLine = async (state, all) => {
   let { modifiedLines, line } = state;
   const { schedule, command } = parse(line);
 
@@ -61,7 +61,7 @@ const processLine = async (state, full) => {
   }
 
   state.count += 1;
-  if (!full) {
+  if (!all) {
     const question = `\nAdd cronjob ${state.count}:\n${line}\n[y/n/q (quit)]: `;
 
     const userResponse = await new Promise((resolve) => {

@@ -30,7 +30,7 @@ program.command('run')
 
 program.command('discover')
   .description('Discover jobs to add endpoints to!')
-  .option('-f, --full', 'Discover all jobs and monitors with one command!')
+  .option('-a, --all', 'Discover all jobs and monitors with one command!')
   .action((options) => {
     sundial.discover(options);
   });
