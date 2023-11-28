@@ -1,5 +1,4 @@
 import { exec } from 'child_process';
-import os from 'os';
 
 export const replaceSystemdService = async(serviceName, binaryPath) => {
   try {
@@ -24,7 +23,10 @@ export const replaceSystemdService = async(serviceName, binaryPath) => {
 };
 
 const generateUnitFile = (serviceName, binaryPath) => {
-  const username = os.userInfo().username;
+  const username = process.env.SUDO_USER;
+  // console.log(sudoUser); // This should log the username used in the sudo command
+  
+  // const username = os.userInfo().username;
   console.log(username); // This will log the username of the current user
 
   return `[Unit]
