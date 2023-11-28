@@ -24,10 +24,6 @@ export const replaceSystemdService = async(serviceName, binaryPath) => {
 
 const generateUnitFile = (serviceName, binaryPath) => {
   const username = process.env.SUDO_USER;
-  // console.log(sudoUser); // This should log the username used in the sudo command
-  
-  // const username = os.userInfo().username;
-  console.log(username); // This will log the username of the current user
 
   return `[Unit]
   Description=${serviceName}
