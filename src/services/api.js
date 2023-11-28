@@ -30,7 +30,9 @@ export const addErrorLog = async (entry) => {
   try {
     console.log(entry);
     const HEADERS = getHeaders();
-    const { data } = await axios.put(BASE_URL + ADD_ERROR_LOG, entry, HEADERS);
+    const BASE_URL = getBaseUrl();
+    const remoteIP = getRemoteIpAddress() || {};
+    const { data } = await axios.put(BASE_URL + ADD_ERROR_LOG, { ...entry, remoteIP}, HEADERS);
     return data;
   } catch (e) {
     console.error(e);
