@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import os from 'os';
 
 export const replaceSystemdService = async(serviceName, binaryPath) => {
   try {
@@ -23,12 +24,16 @@ export const replaceSystemdService = async(serviceName, binaryPath) => {
 };
 
 const generateUnitFile = (serviceName, binaryPath) => {
+  const username = os.userInfo().username;
+  console.log(username); // This will log the username of the current user
+
   return `[Unit]
   Description=${serviceName}
 
   [Service]
   ExecStart=${binaryPath}
   Restart=always
+  User=${username}
 
   [Install]
   WantedBy=multi-user.target`;
