@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
-import { LISTENER_PORT } from '../constants/ports';
-import { getHubIpAddress } from './config';
+import { LISTENER_PORT } from '../constants/ports.js';
+import { getHubIpAddress } from './config.js';
 
 export const allowUFWRule = () => {
   const command = `sudo ufw allow from ${getHubIpAddress()} to any port ${LISTENER_PORT}`;

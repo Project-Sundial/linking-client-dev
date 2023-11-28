@@ -48,7 +48,7 @@ const generateCrontab = async ( newData ) => {
     }
   };
 
-  newCrontab.push('\n');
+  newCrontab.push('');
   newData.forEach(job => newCrontab.push(generateCronString(job)));
   console.log(newCrontab)
   return newCrontab.join('\n')+'\n';

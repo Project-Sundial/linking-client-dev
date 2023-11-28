@@ -1,10 +1,10 @@
-import { EXECUTABLE_FOLDER_PATH } from "../constants/paths";
+import { EXECUTABLE_FOLDER_PATH } from "../constants/paths.js";
 
 export const addPath = (crontabText) => {
   if (crontabText.startsWith(`PATH=${EXECUTABLE_FOLDER_PATH}:`)) {
     return crontabText
   }
-  return `PATH=${EXECUTABLE_FOLDER_PATH}:$PATH\n` + crontabText;
+  return `PATH=${EXECUTABLE_FOLDER_PATH}:$PATH\n\n` + crontabText;
 }
 
 export const convertPath = (line) => {
