@@ -37,81 +37,25 @@
 
 
 import express from 'express';
-import { exec, spawn } from 'child_process';
-import { EXECUTABLE_PATH } from '../constants/paths.js';
+import { spawn } from 'child_process';
 import { LISTENER_PORT } from '../constants/ports.js';
-import fs from 'fs';
 
 export const listen = () => {
   const app = express();
-  let count = 0;
 
   app.post('/trigger-sync', (req, res) => {
-    count += 1;
-
-    // Log count to file
-    const logFilePath = '/etc/sundial-listen.log';
-    const logMessage = `Trigger count: ${count}\n`;
-
-    fs.appendFile(logFilePath, logMessage, (err) => {
-      if (err) {
-        console.error('Error writing to log file:', err);
-      }
-    });
-
-    const executablePath = EXECUTABLE_PATH;
     const args = [process.argv[1], 'update'];
-
-    const process1 = spawn(executablePath, args);
-
-    process1.stdout.on('data', async (data) => {
-      console.log(data);
-    });
+    const process1 = spawn(process.execPath, args);
 
     process1.stderr.on('data', (data) => {
       console.error(`stderr: ${data}`);
     });
 
     process1.on('close', (code) => {
-      fetchCrontab();
       if (code !== 0) {
         console.error(`Error: Process exited with code ${code}`);
       }
     });
-    const fetchCrontab = async () => {
-      const retrieveCurrentCrontab = async () => {
-        return new Promise((resolve, reject) => {
-          exec('crontab -l', (error, stdout, stderr) => {
-            fs.appendFile(logFilePath, stdout, (err) => {
-              if (err) {
-                console.error('Error 2: writing to log file:', err);
-              }
-            });
-            if (error || stderr) {
-              console.error(`Error listing crontab: ${error} ${stderr}`);
-              reject(error);
-              return;
-            }
-            fs.appendFile(logFilePath, stdout, (err) => {
-              if (err) {
-                console.error('Error 2: writing to log file:', err);
-              }
-            });
-      
-            resolve(stdout);
-          });
-        });
-      };
-    
-      try {
-        const currentCrontab = await retrieveCurrentCrontab();
-        console.log('Current crontab:', currentCrontab );
-        return currentCrontab;
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
-    }
-    fetchCrontab();
 
     console.log('Received trigger request. Initiating sundial update request.');
     res.status(200).send('CLI update call initiated.');
