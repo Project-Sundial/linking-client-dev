@@ -5,7 +5,6 @@ import { EXECUTABLE_PATH } from '../constants/paths.js';
 import { registerMachine } from '../services/api.js';
 import readline from 'readline';
 import { allowUFWRule } from '../services/allowUFWRule.js';
-import os from 'os';
 
 export const register = async (options) => {
   if (!options.apiKey) {

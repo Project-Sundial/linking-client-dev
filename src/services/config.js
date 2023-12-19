@@ -58,22 +58,3 @@ export const getRemoteIpAddress = () => {
 export const getBaseUrl = () => {
   return PROTOCOL + getHubIpAddress() + ':' + BACKEND_PORT;
 };
-
-// export function getReIP() {
-//   const interfaces = os.networkInterfaces();
-//   let ip = null;
-
-//   for (const interfaceName in interfaces) {
-//     if (interfaceName.startsWith('eth') || interfaceName.startsWith('ens')) {
-//       // Check if the interface is not a loopback and is IPv4
-//       const iface = interfaces[interfaceName].find(iface => !iface.internal && iface.family === 'IPv4');
-
-//       if (iface) {
-//         ip = iface.address;
-//         break;
-//       }
-//     }
-//   }
-
-//   return { ip };
-// }
