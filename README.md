@@ -1,4 +1,4 @@
-# cli
+# Linking Client
 Command line interface for loading cron jobs and pinging the server 
 
 FOR DEVELOPMENT:

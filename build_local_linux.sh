@@ -2,15 +2,16 @@
 
 # USER SPECIFIC VARIABLES:
 
-ROOT_PATH="/home/david/cli"
+ROOT_PATH=""
 NODE="node18"
 PLATFORM="linux"
 ARCH="x64"
-UPDATED_CRONTAB="/tmp/updated_crontab"
+
 # BUILD SCRIPT
 
 # Package project
 cd $ROOT_PATH
+npm install
 npm run convert
 pkg --target $NODE-$PLATFORM-$ARCH ./lib/index.js
 
@@ -19,4 +20,5 @@ sudo rm /usr/local/bin/sundial
 sudo mv ./index /usr/local/bin/sundial
 chmod +x /usr/local/bin/sundial
 
-rm -r $ROOT_PATH/lib
+# Cleanup
+rm -r ./lib
